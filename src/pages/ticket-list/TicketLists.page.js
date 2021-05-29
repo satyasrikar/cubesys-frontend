@@ -20,13 +20,13 @@ export const TicketLists = () => {
     <Container>
       <Row>
         <Col>
-          <PageBreadcrumb page="Ticket Lists" />
+          <PageBreadcrumb page="All Tickets" />
         </Col>
       </Row>
       <Row className="mt-4">
         <Col>
           <Link to="/add-ticket">
-            <Button variant="info">Add New Ticket</Button>
+            <Button variant="dark">Add New Ticket</Button>
           </Link>
         </Col>
         <Col className="text-right">

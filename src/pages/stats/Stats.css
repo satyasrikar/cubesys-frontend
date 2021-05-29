@@ -1,0 +1,10 @@
+#blog {
+  background-color: bisque;
+}
+
+#card {
+  display: none;
+}
+
+@media only screen and (min-width: 1000px) {
+}

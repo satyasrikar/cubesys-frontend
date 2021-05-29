@@ -1,5 +1,7 @@
-import Axios from "axios";
-import React, { useState } from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import "./Stats.css";
+
 import {
   Badge,
   Button,
@@ -16,9 +18,24 @@ import {
   Row,
 } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchAllTickets } from "../ticket-list/ticketsAction";
+import BarChart from "../../components/charts/BarChart";
 
 const Stats = () => {
   const [open, setOpen] = useState(false);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(fetchAllTickets());
+  }, []);
+
+  const { searchTicketList, isLoading, error } = useSelector(
+    (state) => state.tickets
+  );
+  if (isLoading) return <h3>Loading ...</h3>;
+  if (error) return <h3>{error}</h3>;
+
+  console.log(searchTicketList);
 
   return (
     <>
@@ -49,6 +66,8 @@ const Stats = () => {
             content.
           </Card.Text>
 
+          {/* Buttons to Sync to Slack
+         Buttons here are to be synced with Notion and SLACK API */}
           <Row>
             <Col className="text-center mt-0 mb-0">
               <Container>
@@ -83,7 +102,7 @@ const Stats = () => {
           </Row>
         </Card.Body>
       </Card>
-
+      <BarChart />
       <Container>
         <Row
           lg={5}

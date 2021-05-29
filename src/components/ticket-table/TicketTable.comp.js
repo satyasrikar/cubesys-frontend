@@ -16,8 +16,8 @@ export const TicketTable = () => {
     <Table striped bordered hover>
       <thead>
         <tr>
-          <th>#</th>
-          <th>Subjects</th>
+          <th>#Ticket ID</th>
+          <th>Title</th>
           <th>Status</th>
           <th>Opened Date</th>
         </tr>

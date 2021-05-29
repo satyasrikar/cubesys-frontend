@@ -72,12 +72,12 @@ export const AddTicketForm = () => {
 
   return (
     <Jumbotron className="mt-3 add-new-ticket bg-light">
-      <h1 className="text-info text-center">Add New Ticket</h1>
+      <h1 className="text-dark text-center">Add New Ticket</h1>
       <hr />
       <div>
         {error && <Alert variant="danger">{error}</Alert>}
-        {successMsg && <Alert variant="primary">{successMsg}</Alert>}
-        {isLoading && <Spinner variant="primary" animation="border" />}
+        {successMsg && <Alert variant="dark">{successMsg}</Alert>}
+        {isLoading && <Spinner variant="dark" animation="border" />}
       </div>
       <Form autoComplete="off" onSubmit={handleOnSubmit}>
         <Form.Group as={Row}>
@@ -114,7 +114,7 @@ export const AddTicketForm = () => {
           </Col>
         </Form.Group>
         <Form.Group>
-          <Form.Label>Password</Form.Label>
+          <Form.Label>Description</Form.Label>
           <Form.Control
             as="textarea"
             name="message"
@@ -125,7 +125,7 @@ export const AddTicketForm = () => {
           />
         </Form.Group>
 
-        <Button type="submit" variant="info" block>
+        <Button type="submit" variant="dark" block>
           Open Ticket
         </Button>
       </Form>
