@@ -15,12 +15,13 @@ import {
   Nav,
   Row,
 } from "react-bootstrap";
+import { Link } from "react-router-dom";
 
 const Stats = () => {
   const [open, setOpen] = useState(false);
 
   return (
-    <div>
+    <>
       <Card>
         <Card.Header>
           <Nav variant="tabs" defaultActiveKey="#first">
@@ -36,39 +37,48 @@ const Stats = () => {
           </Nav>
         </Card.Header>
         <Card.Body>
-          <Card.Title>Special title treatment</Card.Title>
+          <Card.Title>Cubesys | Statistics</Card.Title>
           <Collapse in={open}>
             <div id="example-collapse-text">
-              Anim pariatur cliche reprehenderit, enim eiusmod high life
-              accusamus terry richardson ad squid. Nihil anim keffiyeh
-              helvetica, craft beer labore wes anderson cred nesciunt sapiente
-              ea proident.
+              Please use the Sync to Slack Button to keep your updates in sync
+              with your Slack Channels!
             </div>
           </Collapse>
           <Card.Text>
-            With supporting text below as a natural lead-in to additional
+            View all your Statistics at one place, fetched from your dashboard.
             content.
           </Card.Text>
-          <Row style={{ width: "full" }}>
-            <Col md={4}>
-              <Button
-                onClick={() => setOpen(!open)}
-                aria-controls="example-collapse-text"
-                aria-expanded={open}
-                variant="primary"
-              >
-                Go somewhere
-              </Button>
-            </Col>
-            <Col md={{ span: 4, offset: 2 }}>
-              <Button
-                onClick={() => setOpen(!open)}
-                aria-controls="example-collapse-text"
-                aria-expanded={open}
-                variant="primary"
-              >
-                Go somewhere
-              </Button>
+
+          <Row>
+            <Col className="text-center mt-0 mb-0">
+              <Container>
+                <Row>
+                  <Col md={4}>
+                    <Link to="#">
+                      <Button
+                        variant="dark"
+                        style={{ fontSize: "1rem", padding: "10px 30px" }}
+                        onClick={() => setOpen(!open)}
+                      >
+                        Sync Slack
+                      </Button>
+                    </Link>
+                  </Col>
+                  <Col md={{ span: 4, offset: 4 }}>
+                    <Link to="#">
+                      <Button
+                        variant="success"
+                        style={{
+                          fontSize: "1rem",
+                          padding: "10px 30px",
+                        }}
+                      >
+                        Sync Notion
+                      </Button>
+                    </Link>
+                  </Col>
+                </Row>
+              </Container>
             </Col>
           </Row>
         </Card.Body>
@@ -258,62 +268,68 @@ const Stats = () => {
         </ButtonToolbar>
       </Container>
 
-      <CardGroup style={({ width: "full" }, { margin: "25px" })}>
-        <Card>
-          <Card.Img
-            variant="top"
-            src="https://picsum.photos/200/400"
-            style={{ height: "200px", width: "500px" }}
-          />
-          <Card.Body>
-            <Card.Title>Card title</Card.Title>
-            <Card.Text>
-              This is a wider card with supporting text below as a natural
-              lead-in to additional content. This content is a little bit
-              longer.
-            </Card.Text>
-          </Card.Body>
-          <Card.Footer>
-            <small className="text-muted">Last updated 3 mins ago</small>
-          </Card.Footer>
-        </Card>
-        <Card>
-          <Card.Img
-            variant="top"
-            src="https://picsum.photos/200/302"
-            style={{ height: "200px", width: "500px" }}
-          />
-          <Card.Body>
-            <Card.Title>Card title</Card.Title>
-            <Card.Text>
-              This card has supporting text below as a natural lead-in to
-              additional content.{" "}
-            </Card.Text>
-          </Card.Body>
-          <Card.Footer>
-            <small className="text-muted">Last updated 3 mins ago</small>
-          </Card.Footer>
-        </Card>
-        <Card>
-          <Card.Img
-            variant="top"
-            src="https://picsum.photos/201/300"
-            style={{ height: "200px", width: "500px" }}
-          />
-          <Card.Body>
-            <Card.Title>Card title</Card.Title>
-            <Card.Text>
-              This is a wider card with supporting text below as a natural
-              lead-in to additional content. This card has even longer content
-              than the first to show that equal height action.
-            </Card.Text>
-          </Card.Body>
-          <Card.Footer>
-            <small className="text-muted">Last updated 3 mins ago</small>
-          </Card.Footer>
-        </Card>
-      </CardGroup>
-    </div>
+      <Container>
+        <hr />
+        <h2>Blog</h2>
+
+        <CardGroup style={({ width: "full" }, { margin: "25px" })}>
+          <Card>
+            <Card.Img
+              variant="top"
+              src="https://picsum.photos/200/400"
+              style={{ height: "200px", width: "500px" }}
+            />
+            <Card.Body>
+              <Card.Title>Card title</Card.Title>
+              <Card.Text>
+                This is a wider card with supporting text below as a natural
+                lead-in to additional content. This content is a little bit
+                longer.
+              </Card.Text>
+            </Card.Body>
+            <Card.Footer>
+              <small className="text-muted">Last updated 3 mins ago</small>
+            </Card.Footer>
+          </Card>
+
+          <Card>
+            <Card.Img
+              variant="top"
+              src="https://picsum.photos/200/302"
+              style={{ height: "200px", width: "500px" }}
+            />
+            <Card.Body>
+              <Card.Title>Card title</Card.Title>
+              <Card.Text>
+                This card has supporting text below as a natural lead-in to
+                additional content.{" "}
+              </Card.Text>
+            </Card.Body>
+            <Card.Footer>
+              <small className="text-muted">Last updated 3 mins ago</small>
+            </Card.Footer>
+          </Card>
+
+          <Card>
+            <Card.Img
+              variant="top"
+              src="https://picsum.photos/200/102"
+              style={{ height: "200px", width: "353px" }}
+            />
+            <Card.Body>
+              <Card.Title>Card title</Card.Title>
+              <Card.Text>
+                This card has supporting text below as a natural lead-in to
+                additional content.{" "}
+              </Card.Text>
+            </Card.Body>
+            <Card.Footer>
+              <small className="text-muted">Last updated 3 mins ago</small>
+            </Card.Footer>
+          </Card>
+        </CardGroup>
+      </Container>
+    </>
   );
 };
 

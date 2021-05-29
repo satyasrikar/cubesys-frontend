@@ -76,12 +76,14 @@ export const LoginForm = ({ formSwitcher }) => {
     <Container>
       <Row>
         <Col>
-          <h1 className="text-info text-center">Client Login</h1>
+          <h1 className="text-dark text-center">Cubesys CRM Suite</h1>
+
           <hr />
           {error && <Alert variant="danger">{error}</Alert>}
           <Form autoComplete="off" onSubmit={handleOnSubmit}>
             <Form.Group>
               <Form.Label>Email Address</Form.Label>
+
               <Form.Control
                 type="email"
                 name="email"
@@ -93,6 +95,7 @@ export const LoginForm = ({ formSwitcher }) => {
             </Form.Group>
             <Form.Group>
               <Form.Label>Password</Form.Label>
+
               <Form.Control
                 type="password"
                 name="password"
@@ -104,7 +107,7 @@ export const LoginForm = ({ formSwitcher }) => {
             </Form.Group>
 
             <Button type="submit">Login</Button>
-            {isLoading && <Spinner variant="primary" animation="border" />}
+            {isLoading && <Spinner variant="dark" animation="border" />}
           </Form>
           <hr />
         </Col>
