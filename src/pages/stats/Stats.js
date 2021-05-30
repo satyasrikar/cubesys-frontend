@@ -90,7 +90,7 @@ const Stats = () => {
                           padding: "10px 30px",
                         }}
                       >
-                        Sync Notion
+                        Refresh Lists
                       </Button>
                     </Link>
                   </Col>
@@ -104,6 +104,7 @@ const Stats = () => {
         data={searchTicketList}
         title="Tickets Logged"
         className="mb-2"
+        color="rgb(255, 204, 204)"
       />
       <br />
       <br />
@@ -111,6 +112,7 @@ const Stats = () => {
         data={searchTicketList}
         title="Tickets Resolved"
         className="mb-2"
+        color="rgb(204, 255, 204)"
       />
 
       <Container>

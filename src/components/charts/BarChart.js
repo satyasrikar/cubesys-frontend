@@ -1,25 +1,17 @@
 import React, { useEffect, useState } from "react";
-import { Button } from "react-bootstrap";
+import { Button, Modal } from "react-bootstrap";
 
 import { Bar } from "react-chartjs-2";
 import "./BarChart.css";
+const QRCode = require("qrcode.react");
 
-const BarChart = ({ data, title }) => {
-  const [open, setOpen] = useState([]);
-  const [closed, setClosed] = useState(0);
-
+const BarChart = ({ data, title, color }) => {
   const [monday, setMonday] = useState(0);
+  const [modalShow, setModalShow] = React.useState(false);
 
-  const mydata = [
-    {
-      payload: 20,
-      name: "first",
-    },
-    {
-      payload: 30,
-      name: "second",
-    },
-  ];
+  const [open, setOpen] = useState(false);
+  const [ticketqr, setTicketQR] = useState(false);
+
   const sortedTickets = [...data];
 
   useEffect(() => {
@@ -27,48 +19,67 @@ const BarChart = ({ data, title }) => {
       const str = sortedTickets[key].openAt;
       const res1 = str.slice(8, 10);
       let day = parseInt(res1);
-
-      switch (day % 7) {
-        case 1:
-          setMonday(monday + 1);
-          break;
-        case 2:
-          console.log("two");
-          break;
-        case 3:
-          console.log("three");
-          break;
-        case 4:
-          console.log("four");
-          break;
-        case 5:
-          console.log("fiveayyyyyyyy");
-          break;
-        case 6:
-          console.log("six");
-          break;
-        case 7:
-          console.log("seven");
-          break;
-
-        default:
-          console.log("NOOOOOOOOOOOOOOOO");
-          break;
-      }
+      console.log(sortedTickets[key]);
     });
   }, []);
+  function MyVerticallyCenteredModal(props) {
+    return (
+      <Modal
+        {...props}
+        size="lg"
+        aria-labelledby="contained-modal-title-vcenter"
+        centered
+      >
+        <Modal.Header closeButton>
+          <Modal.Title id="contained-modal-title-vcenter">{title}</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <h6>Centered Modal</h6>
+
+          <p>
+            <QRCode value="hello" />
+          </p>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="success" onClick={props.onHide}>
+            Download QR
+          </Button>
+          <Button variant="dark" onClick={props.onHide}>
+            Close
+          </Button>
+        </Modal.Footer>
+      </Modal>
+    );
+  }
 
   return (
     <div id="barBody">
-      <div>
+      <div id="ticketlog">
         {data.map((ticket) => {
           if (title === "Tickets Logged") {
             if (ticket.status === "Pending operator response") {
               return (
-                <ul>
-                  <li key={`${ticket.subject}_{ticket.openAt}`}>
-                    <b>OPEN TICKETS: </b>
-                    {ticket.subject} - {ticket.openAt}
+                <ul id="openTicketLog">
+                  <li
+                    id="ticketTag"
+                    key={`${ticket.subject}_{ticket.openAt}`}
+                    style={{ height: "40px" }}
+                  >
+                    <b id="openLabel">[PENDING]</b> TICKETS :<b>{ticket._id}</b>
+                    - {ticket.subject}
+                    <Button
+                      id="btn"
+                      variant="dark"
+                      style={{ fontSize: "1rem" }}
+                      onClick={() => setModalShow(true)}
+                    >
+                      Show QR
+                    </Button>
+                    <MyVerticallyCenteredModal
+                      show={modalShow}
+                      onHide={() => setModalShow(false)}
+                      name={{ ticket }}
+                    />
                   </li>
                 </ul>
               );
@@ -76,10 +87,18 @@ const BarChart = ({ data, title }) => {
           } else if (title === "Tickets Resolved") {
             if (ticket.status === "Closed") {
               return (
-                <ul>
-                  <li key={`${ticket.subject}_{ticket.openAt}`}>
-                    <b>CLOSED TICKETS: </b>
-                    {ticket.subject} - {ticket.openAt}
+                <ul id="closedTicketLog">
+                  <li id="ticketTag" key={`${ticket.subject}_{ticket.openAt}`}>
+                    <b id="closedLabel">[RESOLVED]</b> TICKETS :
+                    <b>{ticket._id}</b>- {ticket.subject}
+                    <Button
+                      id="btn"
+                      variant="dark"
+                      style={{ fontSize: "1rem" }}
+                      onClick={() => setModalShow(true)}
+                    >
+                      Show QR
+                    </Button>
                   </li>
                 </ul>
               );
@@ -103,7 +122,7 @@ const BarChart = ({ data, title }) => {
               {
                 label: title,
                 data: ["40", "20", "30", "40", "15", "34", "70"],
-                backgroundColor: ["rgba(0, 0, 0, 0.80)"],
+                backgroundColor: color,
                 borderColor: ["rgba(0, 0, 0, 0.75)"],
                 borderWidth: 1,
                 hoverBorderWidth: 4,
