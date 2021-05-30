@@ -2,6 +2,7 @@ import React from "react";
 import { Header } from "./partials/Header.comp";
 import { Footer } from "./partials/Footer.comp";
 
+import "./DefaultLayout.css";
 export const DefaultLayout = ({ children }) => {
   return (
     <div className="default-layout">
@@ -11,7 +12,7 @@ export const DefaultLayout = ({ children }) => {
 
       <main className="main">{children}</main>
 
-      <footer className="footer">
+      <footer id="footer" className="footer">
         <Footer />
       </footer>
     </div>

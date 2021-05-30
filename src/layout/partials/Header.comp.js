@@ -25,10 +25,12 @@ export const Header = () => {
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="ml-auto">
           <LinkContainer to="/dashboard">
-            <Nav.Link>Dashboard</Nav.Link>
+            <Nav.Link>
+              <b>+New Ticket</b>
+            </Nav.Link>
           </LinkContainer>
           <LinkContainer to="/tickets">
-            <Nav.Link>Tickets</Nav.Link>
+            <Nav.Link>Archive</Nav.Link>
           </LinkContainer>
           <LinkContainer to="/stats">
             <Nav.Link>Statistics</Nav.Link>

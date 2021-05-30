@@ -24,6 +24,7 @@ import BarChart from "../../components/charts/BarChart";
 
 const Stats = () => {
   const [open, setOpen] = useState(false);
+  const [reloadcomp, setReloadComp] = useState(false);
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(fetchAllTickets());
@@ -43,12 +44,12 @@ const Stats = () => {
             <Nav.Item>
               <Nav.Link href="#first">Active</Nav.Link>
             </Nav.Item>
-            <Nav.Item>
+            {/* <Nav.Item>
               <Nav.Link href="#link">Link</Nav.Link>
             </Nav.Item>
             <Nav.Item>
               <Nav.Link href="#disabled">Disabled</Nav.Link>
-            </Nav.Item>
+            </Nav.Item> */}
           </Nav>
         </Card.Header>
         <Card.Body>
@@ -89,6 +90,7 @@ const Stats = () => {
                           fontSize: "1rem",
                           padding: "10px 30px",
                         }}
+                        onClick={() => setReloadComp(!reloadcomp)}
                       >
                         Refresh Lists
                       </Button>
@@ -115,7 +117,7 @@ const Stats = () => {
         color="rgb(204, 255, 204)"
       />
 
-      <Container>
+      {/* <Container>
         <Row
           lg={5}
           style={({ justifyContent: "center" }, { backgroundColor: "white" })}
@@ -297,9 +299,9 @@ const Stats = () => {
             />
           </InputGroup>
         </ButtonToolbar>
-      </Container>
+      </Container> */}
 
-      <Container>
+      {/* <Container>
         <hr />
         <h2>Blog</h2>
 
@@ -359,7 +361,7 @@ const Stats = () => {
             </Card.Footer>
           </Card>
         </CardGroup>
-      </Container>
+      </Container> */}
     </>
   );
 };
