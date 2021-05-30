@@ -1,0 +1,14 @@
+#barBody {
+  justify-items: center;
+}
+
+#bar {
+  width: 1100px;
+  height: 300px;
+  margin: 0 auto;
+  padding: 20px;
+  border: 1px solid rgb(189, 183, 183);
+  border-radius: 15px;
+  box-shadow: inset 4px 30px 80px 10px #080000;
+  -webkit-box-shadow: inset 2px 1px 4px 1px #969696;
+}

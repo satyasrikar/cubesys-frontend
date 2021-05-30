@@ -35,8 +35,6 @@ const Stats = () => {
   if (isLoading) return <h3>Loading ...</h3>;
   if (error) return <h3>{error}</h3>;
 
-  console.log(searchTicketList);
-
   return (
     <>
       <Card>
@@ -102,7 +100,19 @@ const Stats = () => {
           </Row>
         </Card.Body>
       </Card>
-      <BarChart />
+      <BarChart
+        data={searchTicketList}
+        title="Tickets Logged"
+        className="mb-2"
+      />
+      <br />
+      <br />
+      <BarChart
+        data={searchTicketList}
+        title="Tickets Resolved"
+        className="mb-2"
+      />
+
       <Container>
         <Row
           lg={5}
