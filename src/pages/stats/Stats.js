@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import "./Stats.css";
 
 import {
+  Alert,
   Badge,
   Button,
   ButtonGroup,
@@ -21,15 +22,70 @@ import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchAllTickets } from "../ticket-list/ticketsAction";
 import BarChart from "../../components/charts/BarChart";
+import dotenv from "dotenv";
 
 const Stats = () => {
+  axios.defaults.headers.common[
+    "Authorization"
+  ] = `Bearer ${process.env.NOTION_AUTH_TOKEN}`;
+
+  // axios.defaults.headers.common["Notion-Version"] = "2021-05-13";
+  // axios.defaults.headers.common["Content-Type"] = "application/json";
   const [open, setOpen] = useState(false);
-  const [reloadcomp, setReloadComp] = useState(false);
+  const [show, setShow] = useState(true);
+  const [notion, setNotion] = useState(false);
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(fetchAllTickets());
   }, []);
 
+  const [payload, setPayload] = useState([]);
+
+  const showAlert = () => {
+    setShow(true);
+    if (show) {
+      return (
+        <Alert variant="danger" onClose={() => setShow(false)} dismissible>
+          <Alert.Heading>Oh snap! You got an error!</Alert.Heading>
+          <p>
+            Change this and that and try again. Duis mollis, est non commodo
+            luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit.
+            Cras mattis consectetur purus sit amet fermentum.
+          </p>
+        </Alert>
+      );
+    }
+  };
+
+  function setData() {
+    setPayload({
+      parent: { database_id: `${process.env.NOTION_DATABASE_ID}` },
+      properties: {
+        Name: {
+          title: [
+            {
+              text: {
+                content: "Hello, World",
+              },
+            },
+          ],
+        },
+      },
+    });
+    postToNotion(payload);
+  }
+
+  const postUrl = "https://api.notion.com/v1/pages";
+  const getURL = `https://api.notion.com/v1/databases/${process.env.NOTION_DATABASE_ID}`;
+
+  const postToNotion = (payload) => {
+    axios
+      .post(postUrl, payload)
+      .then((response) => console.log(response))
+      .catch((error) => console.log(error));
+  };
+
+  console.log("THE PAYLOAD is " + payload);
   const { searchTicketList, isLoading, error } = useSelector(
     (state) => state.tickets
   );
@@ -69,14 +125,23 @@ const Stats = () => {
          Buttons here are to be synced with Notion and SLACK API */}
           <Row>
             <Col className="text-center mt-0 mb-0">
-              <Container>
+              <Container id="buttonContainer">
                 <Row>
                   <Col md={4}>
                     <Link to="#">
                       <Button
-                        variant="dark"
+                        id="openInfo"
+                        variant="light"
                         style={{ fontSize: "1rem", padding: "10px 30px" }}
                         onClick={() => setOpen(!open)}
+                      >
+                        View Info
+                      </Button>
+                      <Button
+                        onClick={() => setShow(true)}
+                        id="syncSlack"
+                        variant="dark"
+                        style={{ fontSize: "1rem", padding: "10px 30px" }}
                       >
                         Sync Slack
                       </Button>
@@ -90,9 +155,9 @@ const Stats = () => {
                           fontSize: "1rem",
                           padding: "10px 30px",
                         }}
-                        onClick={() => setReloadComp(!reloadcomp)}
+                        onClick={setData}
                       >
-                        Refresh Lists
+                        Sync Notion Workspace
                       </Button>
                     </Link>
                   </Col>
