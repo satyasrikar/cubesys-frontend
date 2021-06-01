@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./Profile.css";
+import { CSVLink } from "react-csv";
+
 import {
   Breadcrumb,
   Button,
@@ -17,17 +19,33 @@ const Profile = () => {
   const [profilePhoto, setProfilePhoto] = useState(
     "https://i.ibb.co/1m0pj6k/Profile-Placeholder-image-Gray-silhouette-no-photo-of-a-person-on-the-avatar-The-default-pic-is-used.jpg"
   );
-
+  const userData = user;
   const [bio, setBio] = useState("BIO");
 
   useEffect(() => {
     setBio("Associate Software Engineer / Operations");
   }, []);
 
-  const getUserID = () => {
-    const id = user.user._id;
-    const userId = String(id).slice(-6);
-    return userId;
+  const headers = [
+    { label: "Employee ID", key: "id" },
+    { label: "Name", key: "name" },
+    { label: "Email", key: "email" },
+    { label: "Profile", key: "bio" },
+  ];
+
+  const data = [
+    {
+      id: userData.user._id,
+      name: userData.user.name,
+      email: userData.user.email,
+      profile: bio,
+    },
+  ];
+
+  const csvData = {
+    data: data,
+    headers: headers,
+    filename: `[${userData.user.name}]CubesysProfilePhoto.csv`,
   };
 
   return (
@@ -97,7 +115,10 @@ const Profile = () => {
             Home
           </Button>
           <Button id="homeButton" variant="success">
-            Download Profile Details
+            <CSVLink id="csvlink" {...csvData}>
+              {" "}
+              Download Profile Details (CSV)
+            </CSVLink>
           </Button>
         </div>
       </div>
