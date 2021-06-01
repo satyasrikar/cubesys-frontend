@@ -1,0 +1,48 @@
+#profileContainer {
+  padding: 20px;
+  display: flex;
+}
+#profileHeader {
+  padding: 20px;
+}
+
+#syncButton {
+  border: 1px solid black;
+  border-radius: 200px;
+  float: right;
+  padding: 10px;
+  right: 10px;
+}
+#profilePhoto {
+  background-color: rgb(15, 240, 210);
+  margin: 30px;
+}
+
+#editButton {
+  float: left;
+  margin: 1rem;
+  width: 40%;
+}
+#removeButton {
+  float: right;
+  margin: 1rem;
+  width: 40%;
+}
+
+#downloadButton {
+  float: right;
+  margin: 1rem;
+}
+
+#homeButton {
+  float: right;
+  margin: 1rem;
+}
+
+#profileFieldContainer {
+  background-color: blueviolet;
+}
+
+#profileField {
+  background-color: rgb(228, 228, 228);
+}

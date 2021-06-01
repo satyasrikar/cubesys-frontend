@@ -35,6 +35,9 @@ export const Header = () => {
           <LinkContainer to="/stats">
             <Nav.Link>Statistics</Nav.Link>
           </LinkContainer>
+          <LinkContainer to="/profile">
+            <Nav.Link>Profile</Nav.Link>
+          </LinkContainer>
 
           <Nav.Link onClick={logMeOut}>Logout</Nav.Link>
         </Nav>

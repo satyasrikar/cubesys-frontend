@@ -6,17 +6,28 @@
   margin: 0 auto;
 }
 
+#time {
+  display: flex;
+  align-items: center;
+}
+
+#timeLabel {
+  background-color: cadetblue;
+}
+
 #card {
   display: none;
 }
 
 #syncSlack {
-  float: left;
+  float: right;
 }
 #openInfo {
   margin-left: 20px;
   position: absolute;
-  left: -180px;
+  float: left;
+  left: -50px;
+
   border: 2px solid black;
   border-radius: 5px;
 }

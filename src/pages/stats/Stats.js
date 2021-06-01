@@ -32,7 +32,7 @@ const Stats = () => {
   // axios.defaults.headers.common["Notion-Version"] = "2021-05-13";
   // axios.defaults.headers.common["Content-Type"] = "application/json";
   const [open, setOpen] = useState(false);
-  const [show, setShow] = useState(true);
+  const [show, setShow] = useState(false);
   const [notion, setNotion] = useState(false);
   const dispatch = useDispatch();
   useEffect(() => {
@@ -40,22 +40,13 @@ const Stats = () => {
   }, []);
 
   const [payload, setPayload] = useState([]);
-
-  const showAlert = () => {
-    setShow(true);
-    if (show) {
-      return (
-        <Alert variant="danger" onClose={() => setShow(false)} dismissible>
-          <Alert.Heading>Oh snap! You got an error!</Alert.Heading>
-          <p>
-            Change this and that and try again. Duis mollis, est non commodo
-            luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit.
-            Cras mattis consectetur purus sit amet fermentum.
-          </p>
-        </Alert>
-      );
-    }
-  };
+  let currentDate = new Date();
+  let time =
+    currentDate.getHours() +
+    ":" +
+    currentDate.getMinutes() +
+    ":" +
+    currentDate.getSeconds();
 
   function setData() {
     setPayload({
@@ -95,6 +86,10 @@ const Stats = () => {
   return (
     <>
       <Card>
+        <div id="time">
+          <h6>`CURRENT TIME: </h6>
+          <h6>{time}</h6>
+        </div>
         <Card.Header>
           <Nav variant="tabs" defaultActiveKey="#first">
             <Nav.Item>

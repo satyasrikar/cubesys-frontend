@@ -13,6 +13,7 @@ import { AddTicket } from "./pages/new-ticket/AddTicket.page";
 import { TicketLists } from "./pages/ticket-list/TicketLists.page";
 import { Ticket } from "./pages/ticket/Ticket.page";
 import Stats from "./pages/stats/Stats";
+import Profile from "./pages/profile/Profile";
 
 function App() {
   return (
@@ -46,6 +47,9 @@ function App() {
           </PrivateRoute>
           <PrivateRoute exact path="/stats">
             <Stats />
+          </PrivateRoute>
+          <PrivateRoute exact path="/profile">
+            <Profile />
           </PrivateRoute>
 
           <Route path="*">
