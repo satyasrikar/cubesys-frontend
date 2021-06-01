@@ -33,6 +33,10 @@ export const TicketLists = () => {
           <SearchForm />
         </Col>
       </Row>
+      <Row>
+        <Col className="mt-2">Recently Added tickets</Col>
+      </Row>
+      <hr />
       <hr />
       <Row>
         <Col>

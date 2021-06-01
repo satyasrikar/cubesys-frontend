@@ -1,0 +1,14 @@
+#dashboardCards {
+  display: flex;
+}
+
+#chatbot {
+  background-color: cornflowerblue;
+  border-radius: 13px;
+}
+
+#chatbotHeader {
+  background-color: aqua;
+  float: right;
+  padding: 2px;
+}

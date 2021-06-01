@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./Profile.css";
 import { CSVLink } from "react-csv";
+import ChatBot from "react-simple-chatbot";
 
 import {
   Breadcrumb,
@@ -13,6 +14,7 @@ import {
 } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import { PageBreadcrumb } from "../../components/breadcrumb/Breadcrumb.comp";
+import { Link } from "react-router-dom";
 
 const Profile = () => {
   const user = useSelector((state) => state.user);
@@ -47,6 +49,62 @@ const Profile = () => {
     headers: headers,
     filename: `[${userData.user.name}]CubesysProfilePhoto.csv`,
   };
+
+  const steps = [
+    {
+      id: "1",
+      message: "Welcome to Cubesys, what do you want to do today?",
+      trigger: "2",
+    },
+    {
+      id: "2",
+      options: [
+        { value: 1, label: "Add new Ticket", trigger: "3" },
+        { value: 2, label: "View Dashboard", trigger: "4" },
+        { value: 3, label: "View latest tickets", trigger: "5" },
+        { value: 4, label: "Go to profile", trigger: "6" },
+      ],
+    },
+    {
+      id: "3",
+      component: (
+        <Button id="chatButton" variant="link" block>
+          <Link
+            to="/add-ticket"
+            style={{
+              textDecoration: "none",
+            }}
+          >
+            Add New Ticket
+          </Link>
+        </Button>
+      ),
+      end: true,
+    },
+    {
+      id: "4",
+      component: (
+        <Button id="chatButton" variant="light">
+          <Link to="/dashboard">Dashboard</Link>
+        </Button>
+      ),
+      end: true,
+    },
+    {
+      id: "5",
+      component: <div>LATEST TICKETS</div>,
+      end: true,
+    },
+    {
+      id: "6",
+      component: (
+        <Button variant="light">
+          <Link to="/profile">Profile</Link>
+        </Button>
+      ),
+      end: true,
+    },
+  ];
 
   return (
     <>
@@ -122,6 +180,7 @@ const Profile = () => {
           </Button>
         </div>
       </div>
+      <div id="chatbot">{/* <ChatBot steps={steps} /> */}</div>
     </>
   );
 };

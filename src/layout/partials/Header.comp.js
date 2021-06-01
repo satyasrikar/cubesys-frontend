@@ -26,7 +26,7 @@ export const Header = () => {
         <Nav className="ml-auto">
           <LinkContainer to="/dashboard">
             <Nav.Link>
-              <b>+New Ticket</b>
+              <b>Dashboard</b>
             </Nav.Link>
           </LinkContainer>
           <LinkContainer to="/tickets">
