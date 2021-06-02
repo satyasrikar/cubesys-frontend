@@ -90,7 +90,7 @@ const RegistrationForm = () => {
     <Container>
       <Row>
         <Col>
-          <h1 className="text-info">User Registration</h1>
+          <h1 className="text-black">User Registration</h1>
         </Col>
       </Row>
       <hr />
@@ -103,7 +103,6 @@ const RegistrationForm = () => {
           )}
         </Col>
       </Row>
-
       <Row>
         <Col>
           <Form onSubmit={handleOnSubmit}>
@@ -112,6 +111,7 @@ const RegistrationForm = () => {
               <Form.Control
                 type="text"
                 name="name"
+                variant="dark"
                 value={newUser.name}
                 onChange={handleOnChange}
                 placeholder="Your name"

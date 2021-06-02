@@ -7,7 +7,7 @@ import "./registration.style.css";
 
 export const Registration = () => {
   return (
-    <div className="registration-page bg-info">
+    <div className="registration-page bg-dark">
       <div className="mt-5">
         <Jumbotron className="form-box">
           <RegistrationForm />

@@ -16,6 +16,7 @@ import {
 import { useSelector } from "react-redux";
 import { PageBreadcrumb } from "../../components/breadcrumb/Breadcrumb.comp";
 import { Link } from "react-router-dom";
+import { CgProfile } from "react-icons/cg";
 
 const Profile = () => {
   const user = useSelector((state) => state.user);
@@ -139,7 +140,19 @@ const Profile = () => {
         <div id="profileContainer">
           <Row>
             <Card bg="dark" text="white" style={{ width: "18rem" }}>
-              <Card.Header>Profile Photo</Card.Header>
+              <Card.Header>
+                <div style={{ display: "flex", position: "relative" }}>
+                  <h6 style={{ fontSize: "1.2rem" }}>{user.user.name}</h6>
+                  <CgProfile
+                    style={{
+                      width: "30px",
+                      height: "30px",
+                      position: "absolute",
+                      right: "0",
+                    }}
+                  />
+                </div>
+              </Card.Header>
               {loading ? (
                 <h3>Loading ...</h3>
               ) : (
@@ -152,11 +165,13 @@ const Profile = () => {
                 </Button>
               </div>
             </Card>
-            <input
-              onChange={uploadImage}
-              className="form-control"
-              type="file"
-            />
+            <div style={{ width: "18rem", marginTop: "1rem" }}>
+              <input
+                onChange={uploadImage}
+                className="form-control"
+                type="file"
+              />
+            </div>
           </Row>
 
           <div id="profileDetails">

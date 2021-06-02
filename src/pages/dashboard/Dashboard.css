@@ -1,5 +1,9 @@
 #dashboardCards {
   display: flex;
+  background-color: #e6e6e6;
+}
+#jumbotron:hover {
+  background-color: rgb(236, 255, 255);
 }
 
 #calendar {
@@ -8,14 +12,17 @@
   width: 19rem;
 }
 #chatbot {
-  position: relative;
-  background-color: cornflowerblue;
+  background-color: #292b2c;
+  color: rgb(60, 241, 60);
   border-radius: 13px;
-  bottom: 2rem;
+  transition: ease-in-out 5s;
 }
 
 #chatbotHeader {
   background-color: #1a1a1a;
   float: right;
-  padding: 2px;
+}
+#chatbotOnline {
+  padding: 4px;
+  margin-left: 5px;
 }

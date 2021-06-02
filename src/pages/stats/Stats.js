@@ -97,14 +97,13 @@ const Stats = () => {
     <>
       <Container>
         <Card>
-          <div id="time" style={{ display: "flex" }}>
+          <div id="time" style={{ display: "flex", position: "relative" }}>
             <div>
               <b>CURRENT TIME:</b>
             </div>
+            {"   "}
 
-            <div style={{ backgroundColor: "pink", float: "margin" }}>
-              {time}
-            </div>
+            <div style={{ backgroundColor: "pink", position: "" }}>{time}</div>
           </div>
           <Card.Header>
             <Nav variant="tabs" defaultActiveKey="#first">
@@ -150,6 +149,7 @@ const Stats = () => {
                       onClick={() => setShow(true)}
                       id="syncSlack"
                       variant="dark"
+                      disabled
                       style={{
                         fontSize: "1rem",
                         padding: "10px 30px",
@@ -167,6 +167,7 @@ const Stats = () => {
                         padding: "10px 30px",
                         margin: "5px",
                       }}
+                      disabled
                       onClick={setData}
                     >
                       <SiNotion /> Sync Notion Workspace
