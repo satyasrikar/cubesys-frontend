@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Container, Row, Col, Button, Jumbotron, Card } from "react-bootstrap";
+import { ThemeProvider } from "styled-components";
 import { TicketTable } from "../../components/ticket-table/TicketTable.comp";
 import tickets from "../../assets/data/dummy-tickets.json";
 import { PageBreadcrumb } from "../../components/breadcrumb/Breadcrumb.comp";
@@ -12,12 +13,25 @@ import "./Dashboard.css";
 import Calendar from "react-calendar";
 import { GrAdd } from "react-icons/gr";
 import { FaListAlt } from "react-icons/fa";
+import { RiRadioButtonLine } from "react-icons/ri";
 
 export const Dashboard = () => {
   const [open, setOpen] = useState(false);
   const [value, onChange] = useState(new Date());
   const [calendar, setCalendar] = useState(false);
   const [date, setDate] = useState();
+
+  const theme = {
+    background: "#f5f8fb",
+    fontFamily: "Helvetica",
+    headerBgColor: "#292b2c",
+    headerFontColor: "#fff",
+    headerFontSize: "15px",
+    botBubbleColor: "#292b2c",
+    botFontColor: "#fff",
+    userBubbleColor: "#fff",
+    userFontColor: "#4a4a4a",
+  };
 
   const dispatch = useDispatch();
   const { tickets } = useSelector((state) => state.tickets);
@@ -188,10 +202,22 @@ export const Dashboard = () => {
         </Link>
       </Container>
       <div id="chatbot">
+        <span
+          style={{
+            color: "#00CC22",
+            padding: "15px",
+            alignItems: "center",
+          }}
+        >
+          <RiRadioButtonLine />
+          Online
+        </span>
         <Button onClick={toggleChatBox} id="chatbotHeader">
           CubeSys Assistant
         </Button>
-        {toggle ? <ChatBot steps={steps} /> : ""}
+        <ThemeProvider theme={theme}>
+          {toggle ? <ChatBot steps={steps} /> : ""}
+        </ThemeProvider>
       </div>
     </>
   );
