@@ -2,13 +2,20 @@
   display: flex;
 }
 
+#calendar {
+  margin: 0.75rem;
+  border-radius: 10px;
+  width: 19rem;
+}
 #chatbot {
+  position: relative;
   background-color: cornflowerblue;
   border-radius: 13px;
+  bottom: 2rem;
 }
 
 #chatbotHeader {
-  background-color: aqua;
+  background-color: #1a1a1a;
   float: right;
   padding: 2px;
 }

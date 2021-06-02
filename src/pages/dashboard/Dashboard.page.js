@@ -9,8 +9,16 @@ import ChatBot from "react-simple-chatbot";
 
 import { fetchAllTickets } from "../ticket-list/ticketsAction";
 import "./Dashboard.css";
+import Calendar from "react-calendar";
+import { GrAdd } from "react-icons/gr";
+import { FaListAlt } from "react-icons/fa";
 
 export const Dashboard = () => {
+  const [open, setOpen] = useState(false);
+  const [value, onChange] = useState(new Date());
+  const [calendar, setCalendar] = useState(false);
+  const [date, setDate] = useState();
+
   const dispatch = useDispatch();
   const { tickets } = useSelector((state) => state.tickets);
   const [toggle, setToggle] = useState(false);
@@ -18,14 +26,31 @@ export const Dashboard = () => {
     if (!tickets.length) {
       dispatch(fetchAllTickets());
     }
-  }, [tickets, dispatch]);
+  }, [tickets, dispatch, date]);
 
   const toggleChatBox = () => {
     setToggle(!toggle);
   };
 
+  let currentDate = new Date();
+  let time =
+    currentDate.getHours() +
+    ":" +
+    currentDate.getMinutes() +
+    ":" +
+    currentDate.getSeconds();
   const pendingTickets = tickets.filter((row) => row.status !== "Closed");
   const totalTickets = tickets.length;
+
+  const openTickets = tickets.filter(
+    (row) => row.status !== "Pending operator response"
+  );
+  let last = openTickets.pop();
+  const showCalendar = () => {
+    setCalendar(!calendar);
+  };
+  const [nowTime, setNowtime] = useState(value);
+  console.log(nowTime);
 
   const steps = [
     {
@@ -82,6 +107,7 @@ export const Dashboard = () => {
       end: true,
     },
   ];
+
   return (
     <>
       <Container>
@@ -103,13 +129,6 @@ export const Dashboard = () => {
           </p> */}
         </Jumbotron>
 
-        <div id="chatbot">
-          <Button onClick={toggleChatBox} id="chatbotHeader">
-            CubeSys Assistant
-          </Button>
-          {toggle ? <ChatBot steps={steps} /> : ""}
-        </div>
-
         <Row>
           <Col>
             <PageBreadcrumb page="Dashboard" />
@@ -121,70 +140,59 @@ export const Dashboard = () => {
             <Card.Body>
               <Card.Title>Total tickets:</Card.Title>
               <Card.Subtitle className="mb-2 text-muted">
-                Card Subtitle
+                Total Log Count
               </Card.Subtitle>
               <Card.Text>{totalTickets}</Card.Text>
-              <Card.Link href="#">Card Link</Card.Link>
-              <Card.Link href="#">Another Link</Card.Link>
+              <Card.Link href="#">View Tickets</Card.Link>
             </Card.Body>
           </Card>
           <Card border="dark" style={{ width: "15rem", margin: "10px" }}>
             <Card.Body>
               <Card.Title>Pending tickets:</Card.Title>
               <Card.Subtitle className="mb-2 text-muted">
-                Card Subtitle
+                Unresolved
               </Card.Subtitle>
               <Card.Text>{pendingTickets.length}</Card.Text>
-              <Card.Link href="#">Card Link</Card.Link>
-              <Card.Link href="#">Another Link</Card.Link>
+              <Card.Link href="#">View Tickets</Card.Link>
             </Card.Body>
           </Card>
-          <Card border="dark" style={{ width: "15rem", margin: "10px" }}>
-            <Card.Body>
-              <Card.Title>Pending tickets:</Card.Title>
-              <Card.Subtitle className="mb-2 text-muted">
-                Card Subtitle
-              </Card.Subtitle>
-              <Card.Text>{pendingTickets.length}</Card.Text>
-              <Card.Link href="#">Card Link</Card.Link>
-              <Card.Link href="#">Another Link</Card.Link>
-            </Card.Body>
-          </Card>
-          <Card border="dark" style={{ width: "15rem", margin: "10px" }}>
-            <Card.Body>
-              <Card.Title>Pending tickets:</Card.Title>
-              <Card.Subtitle className="mb-2 text-muted">
-                Card Subtitle
-              </Card.Subtitle>
-              <Card.Text>{pendingTickets.length}</Card.Text>
-              <Card.Link href="#">Card Link</Card.Link>
-              <Card.Link href="#">Another Link</Card.Link>
-            </Card.Body>
-          </Card>
+          <div id="calendar">
+            <Calendar onChange={onChange} value={value} />
+          </div>
         </div>
 
         <Link to="/add-ticket">
           <Button
-            variant="dark"
-            style={{ fontSize: "1rem", padding: "10px 30px" }}
+            variant="light"
+            style={{
+              fontSize: "1rem",
+              padding: "10px 30px",
+              border: "1px solid black",
+            }}
           >
-            Add New Ticket
+            <GrAdd /> Add New Ticket
           </Button>
         </Link>
 
         <Link to="/tickets">
           <Button
-            variant="success"
+            variant="info"
             style={{
               fontSize: "1rem",
               padding: "10px 30px",
               margin: "1rem",
             }}
           >
-            View All Tickets
+            <FaListAlt /> View All Tickets
           </Button>
         </Link>
       </Container>
+      <div id="chatbot">
+        <Button onClick={toggleChatBox} id="chatbotHeader">
+          CubeSys Assistant
+        </Button>
+        {toggle ? <ChatBot steps={steps} /> : ""}
+      </div>
     </>
   );
 };

@@ -1,6 +1,9 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import "./Stats.css";
+import "react-calendar/dist/Calendar.css";
+import { SiNotion, SiSlack } from "react-icons/si";
+import { FaCalendarAlt } from "react-icons/fa";
 
 import {
   Alert,
@@ -23,6 +26,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchAllTickets } from "../ticket-list/ticketsAction";
 import BarChart from "../../components/charts/BarChart";
 import dotenv from "dotenv";
+import Calendar from "react-calendar";
 
 const Stats = () => {
   axios.defaults.headers.common[
@@ -34,10 +38,13 @@ const Stats = () => {
   const [open, setOpen] = useState(false);
   const [show, setShow] = useState(false);
   const [notion, setNotion] = useState(false);
+  const [calendar, setCalendar] = useState(false);
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(fetchAllTickets());
-  }, []);
+  }, [dispatch]);
+
+  const [date, setDate] = useState("");
 
   const [payload, setPayload] = useState([]);
   let currentDate = new Date();
@@ -76,352 +83,111 @@ const Stats = () => {
       .catch((error) => console.log(error));
   };
 
-  console.log("THE PAYLOAD is " + payload);
   const { searchTicketList, isLoading, error } = useSelector(
     (state) => state.tickets
   );
   if (isLoading) return <h3>Loading ...</h3>;
   if (error) return <h3>{error}</h3>;
 
+  const showCalendar = () => {
+    setCalendar(!calendar);
+  };
+
   return (
     <>
-      <Card>
-        <div id="time">
-          <h6>`CURRENT TIME: </h6>
-          <h6>{time}</h6>
-        </div>
-        <Card.Header>
-          <Nav variant="tabs" defaultActiveKey="#first">
-            <Nav.Item>
-              <Nav.Link href="#first">Active</Nav.Link>
-            </Nav.Item>
-            {/* <Nav.Item>
-              <Nav.Link href="#link">Link</Nav.Link>
-            </Nav.Item>
-            <Nav.Item>
-              <Nav.Link href="#disabled">Disabled</Nav.Link>
-            </Nav.Item> */}
-          </Nav>
-        </Card.Header>
-        <Card.Body>
-          <Card.Title>Cubesys | Statistics</Card.Title>
-          <Collapse in={open}>
-            <div id="example-collapse-text">
-              Please use the Sync to Slack Button to keep your updates in sync
-              with your Slack Channels!
+      <Container>
+        <Card>
+          <div id="time" style={{ display: "flex" }}>
+            <div>
+              <b>CURRENT TIME:</b>
             </div>
-          </Collapse>
-          <Card.Text>
-            View all your Statistics at one place, fetched from your dashboard.
-            content.
-          </Card.Text>
 
-          {/* Buttons to Sync to Slack
+            <div style={{ backgroundColor: "pink", float: "margin" }}>
+              {time}
+            </div>
+          </div>
+          <Card.Header>
+            <Nav variant="tabs" defaultActiveKey="#first">
+              <Nav.Item>
+                <Nav.Link href="#first">Ticket Statistics</Nav.Link>
+              </Nav.Item>
+            </Nav>
+          </Card.Header>
+          <Card.Body>
+            <Card.Title>Cubesys | Statistics</Card.Title>
+            <Collapse in={open}>
+              <div id="statsCalendar">
+                <Calendar />
+              </div>
+            </Collapse>
+            <Card.Text>
+              View all your Statistics at one place, fetched from your
+              dashboard. content.
+            </Card.Text>
+
+            {/* Buttons to Sync to Slack
          Buttons here are to be synced with Notion and SLACK API */}
-          <Row>
-            <Col className="text-center mt-0 mb-0">
-              <Container id="buttonContainer">
-                <Row>
-                  <Col md={4}>
-                    <Link to="#">
-                      <Button
-                        id="openInfo"
-                        variant="light"
-                        style={{ fontSize: "1rem", padding: "10px 30px" }}
-                        onClick={() => setOpen(!open)}
-                      >
-                        View Info
-                      </Button>
-                      <Button
-                        onClick={() => setShow(true)}
-                        id="syncSlack"
-                        variant="dark"
-                        style={{ fontSize: "1rem", padding: "10px 30px" }}
-                      >
-                        Sync Slack
-                      </Button>
-                    </Link>
-                  </Col>
-                  <Col md={{ span: 4, offset: 4 }}>
-                    <Link to="#">
-                      <Button
-                        variant="success"
-                        style={{
-                          fontSize: "1rem",
-                          padding: "10px 30px",
-                        }}
-                        onClick={setData}
-                      >
-                        Sync Notion Workspace
-                      </Button>
-                    </Link>
-                  </Col>
-                </Row>
-              </Container>
-            </Col>
-          </Row>
-        </Card.Body>
-      </Card>
-      <BarChart
-        data={searchTicketList}
-        title="Tickets Logged"
-        className="mb-2"
-        color="rgb(255, 204, 204)"
-      />
-      <br />
-      <br />
-      <BarChart
-        data={searchTicketList}
-        title="Tickets Resolved"
-        className="mb-2"
-        color="rgb(204, 255, 204)"
-      />
+            <Row>
+              <Col className="text-center mt-0 mb-0">
+                <Container id="buttonContainer">
+                  <Row style={{ display: "flex" }}>
+                    <Button
+                      id="openCalendar"
+                      variant="light"
+                      style={{
+                        fontSize: "1rem",
+                        padding: "10px 30px",
+                        margin: "5px",
+                        border: "1px solid black",
+                      }}
+                      onClick={() => {
+                        setOpen(!open);
+                      }}
+                    >
+                      <FaCalendarAlt /> View Calendar
+                    </Button>
+                    <Button
+                      onClick={() => setShow(true)}
+                      id="syncSlack"
+                      variant="dark"
+                      style={{
+                        fontSize: "1rem",
+                        padding: "10px 30px",
+                        margin: "5px",
+                      }}
+                    >
+                      <SiSlack /> {""}Sync Slack
+                    </Button>
 
-      {/* <Container>
-        <Row
-          lg={5}
-          style={({ justifyContent: "center" }, { backgroundColor: "white" })}
-        >
-          <Col lg={3}>
-            <Card
-              bg="dark"
-              text="light"
-              style={{ margin: "5px" }}
-              className="mb-2"
-            >
-              <Card.Header>Dashboard UI1</Card.Header>
-              <Card.Body>
-                <Card.Title>
-                  Card Title
-                  <Badge bg="success">Success</Badge>
-                </Card.Title>
-                <Card.Text>
-                  Some quick example text to build on the card title and make up
-                  the bulk of the card's content.
-                </Card.Text>
-              </Card.Body>
-            </Card>
-          </Col>
-          <Col lg={3}>
-            <Card
-              bg="dark"
-              text="light"
-              style={{ margin: "5px" }}
-              className="mb-2"
-            >
-              <Card.Header>Dashboard UI1</Card.Header>
-              <Card.Body>
-                <Card.Title>
-                  Card Title
-                  <Badge bg="success">Success</Badge>
-                </Card.Title>
-                <Card.Text>
-                  Some quick example text to build on the card title and make up
-                  the bulk of the card's content.
-                </Card.Text>
-              </Card.Body>
-            </Card>
-          </Col>
-          <Col lg={3}>
-            <Card
-              bg="dark"
-              text="light"
-              style={{ margin: "5px" }}
-              className="mb-2"
-            >
-              <Card.Header>Dashboard UI1</Card.Header>
-              <Card.Body>
-                <Card.Title>
-                  Card Title
-                  <Badge bg="success">Success</Badge>
-                </Card.Title>
-                <Card.Text>
-                  Some quick example text to build on the card title and make up
-                  the bulk of the card's content.
-                </Card.Text>
-              </Card.Body>
-            </Card>
-          </Col>
-          <Col lg={3}>
-            <Card
-              bg="dark"
-              text="light"
-              style={{ margin: "5px" }}
-              className="mb-2"
-            >
-              <Card.Header>Dashboard UI1</Card.Header>
-              <Card.Body>
-                <Card.Title>
-                  Card Title
-                  <Badge bg="success">Success</Badge>
-                </Card.Title>
-                <Card.Text>
-                  Some quick example text to build on the card title and make up
-                  the bulk of the card's content.
-                </Card.Text>
-              </Card.Body>
-            </Card>
-          </Col>
-        </Row>
-        <Row
-          lg={5}
-          style={({ justifyContent: "center" }, { backgroundColor: "white" })}
-        >
-          <Col lg={3}>
-            <Card
-              bg="dark"
-              text="light"
-              style={{ margin: "5px" }}
-              className="mb-2"
-            >
-              <Card.Body>
-                <Card.Title>
-                  Card Title
-                  <Badge bg="success">Success</Badge>
-                </Card.Title>
-                <Card.Text>
-                  Some quick example text to build on the card title and make up
-                  the bulk of the card's content.
-                </Card.Text>
-              </Card.Body>
-            </Card>
-          </Col>
-          <Col lg={3}>
-            <Card
-              bg="dark"
-              text="light"
-              style={{ margin: "5px" }}
-              className="mb-2"
-            >
-              <Card.Body>
-                <Card.Title>
-                  Card Title
-                  <Badge bg="success">Success</Badge>
-                </Card.Title>
-                <Card.Text>
-                  Some quick example text to build on the card title and make up
-                  the bulk of the card's content.
-                </Card.Text>
-              </Card.Body>
-            </Card>
-          </Col>
-          <Col lg={3}>
-            <Card
-              bg="dark"
-              text="light"
-              style={{ margin: "5px" }}
-              className="mb-2"
-            >
-              <Card.Body>
-                <Card.Title>
-                  Card Title
-                  <Badge bg="success">Success</Badge>
-                </Card.Title>
-                <Card.Text>
-                  Some quick example text to build on the card title and make up
-                  the bulk of the card's content.
-                </Card.Text>
-              </Card.Body>
-            </Card>
-          </Col>
-          <Col lg={3}>
-            <Card
-              bg="dark"
-              text="light"
-              style={{ margin: "5px" }}
-              className="mb-2"
-            >
-              <Card.Body>
-                <Card.Title>
-                  Card Title
-                  <Badge bg="success">Success</Badge>
-                </Card.Title>
-                <Card.Text>
-                  Some quick example text to build on the card title and make up
-                  the bulk of the card's content.
-                </Card.Text>
-              </Card.Body>
-            </Card>
-          </Col>
-        </Row>
-        <ButtonToolbar
-          className="justify-content-between p-2"
-          aria-label="Toolbar with Button groups"
-        >
-          <Button variant="outline-success">Home</Button>{" "}
-          <InputGroup>
-            <InputGroup.Text id="btnGroupAddon2">@</InputGroup.Text>
-            <FormControl
-              type="text"
-              placeholder="Input group example"
-              aria-label="Input group example"
-              aria-describedby="btnGroupAddon2"
-            />
-          </InputGroup>
-        </ButtonToolbar>
-      </Container> */}
-
-      {/* <Container>
-        <hr />
-        <h2>Blog</h2>
-
-        <CardGroup style={({ width: "full" }, { margin: "25px" })}>
-          <Card>
-            <Card.Img
-              variant="top"
-              src="https://picsum.photos/200/400"
-              style={{ height: "200px", width: "500px" }}
-            />
-            <Card.Body>
-              <Card.Title>Card title</Card.Title>
-              <Card.Text>
-                This is a wider card with supporting text below as a natural
-                lead-in to additional content. This content is a little bit
-                longer.
-              </Card.Text>
-            </Card.Body>
-            <Card.Footer>
-              <small className="text-muted">Last updated 3 mins ago</small>
-            </Card.Footer>
-          </Card>
-
-          <Card>
-            <Card.Img
-              variant="top"
-              src="https://picsum.photos/200/302"
-              style={{ height: "200px", width: "500px" }}
-            />
-            <Card.Body>
-              <Card.Title>Card title</Card.Title>
-              <Card.Text>
-                This card has supporting text below as a natural lead-in to
-                additional content.{" "}
-              </Card.Text>
-            </Card.Body>
-            <Card.Footer>
-              <small className="text-muted">Last updated 3 mins ago</small>
-            </Card.Footer>
-          </Card>
-
-          <Card>
-            <Card.Img
-              variant="top"
-              src="https://picsum.photos/200/102"
-              style={{ height: "200px", width: "353px" }}
-            />
-            <Card.Body>
-              <Card.Title>Card title</Card.Title>
-              <Card.Text>
-                This card has supporting text below as a natural lead-in to
-                additional content.{" "}
-              </Card.Text>
-            </Card.Body>
-            <Card.Footer>
-              <small className="text-muted">Last updated 3 mins ago</small>
-            </Card.Footer>
-          </Card>
-        </CardGroup>
-      </Container> */}
+                    <Button
+                      id="syncNotion"
+                      variant="success"
+                      style={{
+                        fontSize: "1rem",
+                        padding: "10px 30px",
+                        margin: "5px",
+                      }}
+                      onClick={setData}
+                    >
+                      <SiNotion /> Sync Notion Workspace
+                    </Button>
+                  </Row>
+                  <Row>
+                    <BarChart
+                      data={searchTicketList}
+                      title="Tickets Logged"
+                      className="mb-2"
+                      color="rgb(255, 204, 204)"
+                    />
+                    <hr />
+                  </Row>
+                </Container>
+              </Col>
+            </Row>
+          </Card.Body>
+        </Card>
+        <br />
+      </Container>
     </>
   );
 };

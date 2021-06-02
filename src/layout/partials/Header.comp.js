@@ -4,6 +4,7 @@ import logo from "../../assets/img/logo.png";
 import { useHistory } from "react-router-dom";
 import { LinkContainer } from "react-router-bootstrap";
 
+import { FiLogOut } from "react-icons/fi";
 import { userLogout } from "../../api/userApi";
 
 export const Header = () => {
@@ -18,19 +19,18 @@ export const Header = () => {
 
   return (
     <Navbar collapseOnSelect bg="dark" variant="dark" expand="md">
-      <Navbar.Brand>
+      <Navbar.Brand style={{ display: "flex", alignItems: "center" }}>
         <img src={logo} alt="logo" width="50px" />
+        <h4 className="ml-2">Cubesys CRM</h4>
       </Navbar.Brand>
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="ml-auto">
           <LinkContainer to="/dashboard">
-            <Nav.Link>
-              <b>Dashboard</b>
-            </Nav.Link>
+            <Nav.Link>Dashboard</Nav.Link>
           </LinkContainer>
           <LinkContainer to="/tickets">
-            <Nav.Link>Archive</Nav.Link>
+            <Nav.Link>Tickets</Nav.Link>
           </LinkContainer>
           <LinkContainer to="/stats">
             <Nav.Link>Statistics</Nav.Link>
@@ -39,7 +39,11 @@ export const Header = () => {
             <Nav.Link>Profile</Nav.Link>
           </LinkContainer>
 
-          <Nav.Link onClick={logMeOut}>Logout</Nav.Link>
+          <Nav.Link onClick={logMeOut}>
+            Logout
+            {"  "}
+            <FiLogOut />
+          </Nav.Link>
         </Nav>
       </Navbar.Collapse>
     </Navbar>

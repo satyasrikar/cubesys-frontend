@@ -8,6 +8,7 @@ import {
   Button,
   Card,
   Col,
+  Container,
   Image,
   Row,
   Table,
@@ -23,6 +24,8 @@ const Profile = () => {
   );
   const userData = user;
   const [bio, setBio] = useState("BIO");
+  const [loading, setLoading] = useState(false);
+  const [image, setImage] = useState("");
 
   useEffect(() => {
     setBio("Associate Software Engineer / Operations");
@@ -106,81 +109,111 @@ const Profile = () => {
     },
   ];
 
+  const uploadImage = async (e) => {
+    const files = e.target.files;
+    const data = new FormData();
+    data.append("file", files[0]);
+    data.append("upload_preset", "ml_default");
+    setLoading(true);
+
+    const res = fetch("https://api.cloudinary.com/v1_1/satyasri/image/upload", {
+      method: "POST",
+      body: data,
+    });
+
+    const file = await res;
+    console.log(file);
+    setImage(file.secure_url);
+    setLoading(false);
+  };
+
   return (
     <>
-      <Row>
-        <Col>
-          <PageBreadcrumb page="Profile" />
-        </Col>
-      </Row>
+      <Container>
+        <Row>
+          <Col>
+            <PageBreadcrumb page="Profile" />
+          </Col>
+        </Row>
 
-      <div id="profileContainer">
-        <Card bg="dark" text="white" style={{ width: "18rem" }}>
-          <Card.Header>Profile Photo</Card.Header>
-          <Image id="profilePhoto" src={profilePhoto} roundedCircle />
+        <div id="profileContainer">
+          <Row>
+            <Card bg="dark" text="white" style={{ width: "18rem" }}>
+              <Card.Header>Profile Photo</Card.Header>
+              {loading ? (
+                <h3>Loading ...</h3>
+              ) : (
+                <Image id="profilePhoto" src={profilePhoto} roundedCircle />
+              )}
 
-          <div style={{ display: "flex" }}>
-            <Button id="editButton" variant="light">
-              Edit
-            </Button>
-            <Button id="removeButton" variant="danger">
-              Remove
+              <div style={{ display: "flex" }}>
+                <Button id="removeButton" variant="danger">
+                  Remove
+                </Button>
+              </div>
+            </Card>
+            <input
+              onChange={uploadImage}
+              className="form-control"
+              type="file"
+            />
+          </Row>
+
+          <div id="profileDetails">
+            <Card
+              id="profileDetailsCard"
+              bg="white"
+              text="dark"
+              style={{ width: "45rem" }}
+              className="ml-4"
+            >
+              <Card.Header>
+                <div>
+                  <b>Profile Details</b>
+                </div>
+              </Card.Header>
+              <Card.Body>
+                <Table bordered>
+                  <tbody>
+                    <tr>
+                      <th>ID</th>
+                      <td>{user.user._id}</td>
+                    </tr>
+                    <tr>
+                      <th>Name</th>
+                      <td>{user.user.name}</td>
+                    </tr>
+                    <tr>
+                      <th>Profile</th>
+                      <td>Manager</td>
+                    </tr>
+                    <tr>
+                      <th>Email</th>
+                      <td>{user.user.email}</td>
+                    </tr>
+                    <tr>
+                      <th>Bio</th>
+                      <td>{bio}</td>
+                    </tr>
+                  </tbody>
+                </Table>
+              </Card.Body>
+            </Card>
+            <Link to="/dashboard">
+              <Button id="homeButton" variant="info">
+                Home
+              </Button>
+            </Link>
+            <Button id="downloadButton" variant="success">
+              <CSVLink id="csvlink" {...csvData}>
+                {" "}
+                Download Profile Details (CSV)
+              </CSVLink>
             </Button>
           </div>
-        </Card>
-
-        <div id="profileDetails">
-          <Card
-            id="profileDetailsCard"
-            bg="white"
-            text="dark"
-            style={{ width: "60rem" }}
-            className="ml-4"
-          >
-            <Card.Header>
-              <div>
-                <b>Profile Details</b>
-              </div>
-            </Card.Header>
-            <Card.Body>
-              <Table bordered>
-                <tbody>
-                  <tr>
-                    <th>ID</th>
-                    <td>{user.user._id}</td>
-                  </tr>
-                  <tr>
-                    <th>Name</th>
-                    <td>{user.user.name}</td>
-                  </tr>
-                  <tr>
-                    <th>Profile</th>
-                    <td>Manager</td>
-                  </tr>
-                  <tr>
-                    <th>Email</th>
-                    <td>{user.user.email}</td>
-                  </tr>
-                  <tr>
-                    <th>Bio</th>
-                    <td>{bio}</td>
-                  </tr>
-                </tbody>
-              </Table>
-            </Card.Body>
-          </Card>
-          <Button id="downloadButton" variant="info">
-            Home
-          </Button>
-          <Button id="homeButton" variant="success">
-            <CSVLink id="csvlink" {...csvData}>
-              {" "}
-              Download Profile Details (CSV)
-            </CSVLink>
-          </Button>
         </div>
-      </div>
-      <div id="chatbot">{/* <ChatBot steps={steps} /> */}</div>
+        <div id="chatbot">{/* <ChatBot steps={steps} /> */}</div>
+      </Container>
     </>
   );
 };

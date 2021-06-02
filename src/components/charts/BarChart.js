@@ -1,27 +1,53 @@
 import React, { useEffect, useState } from "react";
 import { Button, Modal } from "react-bootstrap";
+import { IoQrCode } from "react-icons/io5";
 
-import { Bar } from "react-chartjs-2";
+import { Bar, Line } from "react-chartjs-2";
 import "./BarChart.css";
+import LineChart from "./LineChart";
 const QRCode = require("qrcode.react");
 
 const BarChart = ({ data, title, color }) => {
   const [monday, setMonday] = useState(0);
   const [modalShow, setModalShow] = React.useState(false);
   const [modaltext, setModaltext] = React.useState("");
+  const [opentickets, setOpentickets] = useState(0);
+  const [closedtickets, setClosedtickets] = useState(0);
+  const weekTicketMap = [
+    { Monday: 0 },
+    { Tuesday: 0 },
+    { Wednesday: 0 },
+    { Thursday: 0 },
+    { Friday: 0 },
+    { Saturday: 0 },
+    { Sunday: 0 },
+  ];
 
   const [open, setOpen] = useState(false);
   const [ticketqr, setTicketQR] = useState(false);
-
+  let weekday = [];
   const sortedTickets = [...data];
-  const modalDesc = "Lorem";
+  const modalDesc = "LoremIp";
+  const [allWeek, setAllWeek] = useState(0);
+
+  const calculateWeek = () => {
+    data.map((ticket, key) => {
+      const str = sortedTickets[key].openAt;
+      const res1 = str.slice(8, 10);
+      let day = parseInt(res1);
+      weekday.push(day % 7);
+    });
+    setAllWeek(weekday.slice(0, 8));
+  };
+
+  console.log(allWeek);
 
   const downloadQRCode = () => {
     const qrCodeURL = document
       .getElementById("qrcode")
       .toDataURL("image/png")
       .replace("image/png", "image/octet-stream");
-    console.log(qrCodeURL);
+
     let aEl = document.createElement("a");
     aEl.href = qrCodeURL;
     aEl.download = "TicketQR_CubeSys_CRM";
@@ -35,7 +61,8 @@ const BarChart = ({ data, title, color }) => {
       const str = sortedTickets[key].openAt;
       const res1 = str.slice(8, 10);
       let day = parseInt(res1);
-      console.log(sortedTickets[key]);
+
+      calculateWeek();
     });
   }, []);
   function MyVerticallyCenteredModal(props) {
@@ -47,13 +74,14 @@ const BarChart = ({ data, title, color }) => {
         centered
       >
         <Modal.Header closeButton>
-          <Modal.Title id="contained-modal-title-vcenter">{title}</Modal.Title>
+          <Modal.Title id="contained-modal-title-vcenter">
+            Download Dynamic Ticket QR
+          </Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <div id="modalbody">
             <h6>Open Ticket</h6>
             <p>{modaltext}</p>
-
             <p>
               <QRCode id="qrcode" value={modaltext} />
             </p>
@@ -75,7 +103,7 @@ const BarChart = ({ data, title, color }) => {
     <>
       <div id="barBody">
         <div id="ticketlog">
-          {data.map((ticket) => {
+          {data.map((ticket, index) => {
             if (title === "Tickets Logged") {
               if (ticket.status === "Pending operator response") {
                 return (
@@ -99,7 +127,7 @@ const BarChart = ({ data, title, color }) => {
                           setModaltext(ticket.subject);
                         }}
                       >
-                        Show QR
+                        <IoQrCode /> Show QR ID
                       </Button>
                       <MyVerticallyCenteredModal
                         show={modalShow}
@@ -129,7 +157,7 @@ const BarChart = ({ data, title, color }) => {
                         style={{ fontSize: "1rem" }}
                         onClick={() => setModalShow(true)}
                       >
-                        Show QRx
+                        Show QR ID
                       </Button>
                       <MyVerticallyCenteredModal
                         show={modalShow}
@@ -144,6 +172,7 @@ const BarChart = ({ data, title, color }) => {
             }
           })}
         </div>
+
         <div id="bar">
           <Bar
             data={{
@@ -159,7 +188,7 @@ const BarChart = ({ data, title, color }) => {
               datasets: [
                 {
                   label: title,
-                  data: ["40", "20", "30", "40", "15", "34", "70"],
+                  data: allWeek,
                   backgroundColor: color,
                   borderColor: ["rgba(0, 0, 0, 0.75)"],
                   borderWidth: 1,
