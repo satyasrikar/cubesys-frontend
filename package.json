@@ -2,6 +2,7 @@
   "name": "crm-frontend",
   "version": "0.1.0",
   "private": true,
+  "proxy": "http://ec2-18-117-211-14.us-east-2.compute.amazonaws.com",
   "dependencies": {
     "@reduxjs/toolkit": "^1.5.0",
     "@testing-library/jest-dom": "^4.2.4",
