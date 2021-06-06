@@ -6,7 +6,7 @@ import { ResetPassword } from "../../components/password-reset/PasswordReset.com
 
 import "./entry.style.css";
 
-//Workflow
+//To do list
 
 // [] Create password reset page
 // [] Add request OTP form
@@ -30,19 +30,21 @@ export const Entry = () => {
   };
 
   return (
-    <div className="entry-page bg-dark">
-      <Jumbotron className="form-box">
-        {frmLoad === "login" && <LoginForm formSwitcher={formSwitcher} />}
+    <>
+      <div className="entry-page bg-dark">
+        <Jumbotron className="form-box">
+          {frmLoad === "login" && <LoginForm formSwitcher={formSwitcher} />}
 
-        {frmLoad === "rest" && (
-          <ResetPassword
-            // handleOnChange={handleOnChange}
-            handleOnResetSubmit={handleOnResetSubmit}
-            formSwitcher={formSwitcher}
-            // email={email}
-          />
-        )}
-      </Jumbotron>
-    </div>
+          {frmLoad === "rest" && (
+            <ResetPassword
+              // handleOnChange={handleOnChange}
+              handleOnResetSubmit={handleOnResetSubmit}
+              formSwitcher={formSwitcher}
+              // email={email}
+            />
+          )}
+        </Jumbotron>
+      </div>
+    </>
   );
 };
