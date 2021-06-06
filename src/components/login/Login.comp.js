@@ -52,7 +52,7 @@ export const LoginForm = ({ formSwitcher }) => {
     e.preventDefault();
 
     if (!email || !password) {
-      return alert("Eorm has empty fields!");
+      return alert("Fill up all the form!");
     }
 
     dispatch(loginPending());
