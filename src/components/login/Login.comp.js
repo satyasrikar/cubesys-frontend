@@ -52,14 +52,16 @@ export const LoginForm = ({ formSwitcher }) => {
     e.preventDefault();
 
     if (!email || !password) {
-      return alert("Eorm has empty fields!");
+      return alert("Form has empty fields!");
     }
 
     dispatch(loginPending());
 
     try {
-      const isAuth = await userLogin({ email, password });
+      console.log("POSTING");
+      console.log({ email, password });
 
+      const isAuth = await userLogin({ email, password });
       if (isAuth.status === "error") {
         return dispatch(loginFail(isAuth.message));
       }

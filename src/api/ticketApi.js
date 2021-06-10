@@ -1,8 +1,11 @@
 import axios from "axios";
 
+// const rootUrl = "http://localhost:3001/v1/";
 const rootUrl = "http://localhost:3001/v1/";
+
 const ticketUlr = rootUrl + "ticket/";
 const closeTicketUrl = rootUrl + "ticket/close-ticket/";
+const openTicketUrl = rootUrl + "ticket/open-ticket/";
 
 export const getAllTickets = () => {
   return new Promise(async (resolve, reject) => {
@@ -59,6 +62,28 @@ export const updateTicketStatusClosed = (_id) => {
     try {
       const result = await axios.patch(
         closeTicketUrl + _id,
+        {},
+        {
+          headers: {
+            Authorization: sessionStorage.getItem("accessJWT"),
+          },
+        }
+      );
+
+      resolve(result.data);
+    } catch (error) {
+      console.log(error.message);
+      reject(error);
+    }
+  });
+};
+
+export const updateTicketStatusOpen = (_id) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      console.log("PATHCHHHHHHHHHH");
+      const result = await axios.patch(
+        openTicketUrl + _id,
         {},
         {
           headers: {

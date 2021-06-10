@@ -69,6 +69,19 @@ const ticketListSlice = createSlice({
       state.isLoading = false;
       state.error = payload;
     },
+
+    openTicketLoading: (state) => {
+      state.isLoading = true;
+    },
+    openTicketSuccess: (state, { payload }) => {
+      state.isLoading = false;
+      state.error = "";
+      state.replyMsg = payload;
+    },
+    openTicketFail: (state, { payload }) => {
+      state.isLoading = false;
+      state.error = payload;
+    },
     resetResponseMsg: (state) => {
       state.isLoading = false;
       state.replyTicketError = "";
@@ -92,6 +105,9 @@ export const {
   closeTicketLoading,
   closeTicketSuccess,
   closeTicketFail,
+  openTicketLoading,
+  openTicketSuccess,
+  openTicketFail,
   searchTickets,
   resetResponseMsg,
 } = actions;

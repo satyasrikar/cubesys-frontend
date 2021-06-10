@@ -12,6 +12,9 @@ import {
   closeTicketLoading,
   closeTicketSuccess,
   closeTicketFail,
+  openTicketLoading,
+  openTicketSuccess,
+  openTicketFail,
 } from "./ticketsSlice";
 
 import {
@@ -19,6 +22,7 @@ import {
   getSingleTicket,
   updateReplyTicket,
   updateTicketStatusClosed,
+  updateTicketStatusOpen,
 } from "../../api/ticketApi";
 
 export const fetchAllTickets = () => async (dispatch) => {
@@ -80,9 +84,27 @@ export const closeTicket = (_id) => async (dispatch) => {
 
     dispatch(fetchSingleTicket(_id));
 
-    dispatch(closeTicketSuccess("Status Updated successfully"));
+    dispatch(closeTicketSuccess("Ticket has been closed!"));
   } catch (error) {
     console.log(error.message);
     dispatch(closeTicketFail(error.message));
+  }
+};
+
+//Actions for opening ticket
+export const openTicket = (_id) => async (dispatch) => {
+  dispatch(openTicketLoading());
+  try {
+    const result = await updateTicketStatusOpen(_id);
+    if (result.status === "error") {
+      return dispatch(openTicketFail(result.message));
+    }
+
+    dispatch(fetchSingleTicket(_id));
+
+    dispatch(openTicketSuccess("Ticket has been reopened!"));
+  } catch (error) {
+    console.log(error.message);
+    dispatch(openTicketFail(error.message));
   }
 };

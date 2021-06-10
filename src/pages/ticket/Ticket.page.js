@@ -6,7 +6,11 @@ import { MessageHistory } from "../../components/message-history/MessageHistory.
 import { UpdateTicket } from "../../components/update-ticket/UpdateTicket.comp";
 import { useParams } from "react-router-dom";
 
-import { fetchSingleTicket, closeTicket } from "../ticket-list/ticketsAction";
+import {
+  fetchSingleTicket,
+  closeTicket,
+  openTicket,
+} from "../ticket-list/ticketsAction";
 import { resetResponseMsg } from "../ticket-list/ticketsSlice";
 
 export const Ticket = () => {
@@ -62,6 +66,13 @@ export const Ticket = () => {
             disabled={selectedTicket.status === "Closed"}
           >
             Close Ticket
+          </Button>
+          <Button
+            variant="outline-danger"
+            onClick={() => dispatch(openTicket(tId))}
+            disabled={selectedTicket.status === "Pending operator response"}
+          >
+            Open Ticket
           </Button>
         </Col>
       </Row>

@@ -1,5 +1,6 @@
 import axios from "axios";
 
+// const rootUrl = "http://localhost:3001/v1/";
 const rootUrl = "http://localhost:3001/v1/";
 
 const loginUrl = rootUrl + "user/login";
