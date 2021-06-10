@@ -5,7 +5,7 @@ import { PageBreadcrumb } from "../../components/breadcrumb/Breadcrumb.comp";
 import { MessageHistory } from "../../components/message-history/MessageHistory.comp";
 import { UpdateTicket } from "../../components/update-ticket/UpdateTicket.comp";
 import { useParams } from "react-router-dom";
-
+import "./Ticket.page.css";
 import {
   fetchSingleTicket,
   closeTicket,
@@ -41,6 +41,16 @@ export const Ticket = () => {
       </Row>
       <Row>
         <Col>
+          {selectedTicket.status === "Pending operator response" ? (
+            <div className="statusbarOpen">OPEN TICKET</div>
+          ) : (
+            <div className="statusbarClosed">CLOSED TICKET</div>
+          )}
+        </Col>
+      </Row>
+
+      <Row>
+        <Col>
           {isLoading && <Spinner variant="primary" animation="border" />}
           {error && <Alert variant="danger">{error}</Alert>}
           {replyTicketError && (
@@ -51,29 +61,39 @@ export const Ticket = () => {
       </Row>
       <Row>
         <Col className="text-weight-bolder text-secondary">
-          <div className="subject">Subject: {selectedTicket.subject}</div>
-          <div className="date">
-            Ticket Opened:{" "}
-            {selectedTicket.openAt &&
-              new Date(selectedTicket.openAt).toLocaleString()}
+          <div className="subject">
+            Subject: <b>{selectedTicket.subject}</b>
           </div>
-          <div className="status">Status: {selectedTicket.status}</div>
+          <div className="date">
+            <b>
+              Ticket Opened:{" "}
+              {selectedTicket.openAt &&
+                new Date(selectedTicket.openAt).toLocaleString()}
+            </b>
+          </div>
+          <div className="status">
+            Status: <b>{selectedTicket.status}</b>
+          </div>
         </Col>
         <Col className="text-right">
-          <Button
-            variant="outline-info"
-            onClick={() => dispatch(closeTicket(tId))}
-            disabled={selectedTicket.status === "Closed"}
-          >
-            Close Ticket
-          </Button>
-          <Button
-            variant="outline-danger"
-            onClick={() => dispatch(openTicket(tId))}
-            disabled={selectedTicket.status === "Pending operator response"}
-          >
-            Open Ticket
-          </Button>
+          {selectedTicket.status == "Pending operator response" ? (
+            <Button
+              className="mr-2"
+              variant="dark"
+              onClick={() => dispatch(closeTicket(tId))}
+              disabled={selectedTicket.status === "Closed"}
+            >
+              Close Ticket
+            </Button>
+          ) : (
+            <Button
+              variant="dark"
+              onClick={() => dispatch(openTicket(tId))}
+              disabled={selectedTicket.status === "Pending operator response"}
+            >
+              Open Ticket
+            </Button>
+          )}
         </Col>
       </Row>
       <Row className="mt-4">

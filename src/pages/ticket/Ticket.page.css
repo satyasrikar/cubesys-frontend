@@ -1,0 +1,22 @@
+.statusbarOpen {
+  width: 100%;
+  text-align: center;
+  color: white;
+
+  background-color: rgb(60, 119, 0);
+  padding: 5px;
+  margin-bottom: 10px;
+  border-radius: 10px;
+  opacity: 70%;
+}
+.statusbarClosed {
+  width: 100%;
+  color: white;
+  text-align: center;
+
+  background-color: rgb(206, 8, 8);
+  padding: 5px;
+  margin-bottom: 10px;
+  border-radius: 10px;
+  opacity: 70%;
+}

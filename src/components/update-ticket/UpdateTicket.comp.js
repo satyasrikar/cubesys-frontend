@@ -43,7 +43,7 @@ export const UpdateTicket = ({ _id }) => {
           name="detail"
         />
         <div className="text-right mt-3 mb-3">
-          <Button variant="info" type="submit">
+          <Button variant="dark" type="submit">
             Reply
           </Button>
         </div>
