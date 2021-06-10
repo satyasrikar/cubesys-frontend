@@ -189,11 +189,11 @@ const BarChart = ({ data, title, color }) => {
                 {
                   label: title,
                   data: allWeek,
-                  backgroundColor: color,
+                  backgroundColor: "rgba(0, 0, 0, 0.45)",
                   borderColor: ["rgba(0, 0, 0, 0.75)"],
                   borderWidth: 1,
                   hoverBorderWidth: 4,
-                  hoverBorderColor: "rgba(255, 255, 255, 1)",
+                  hoverBorderColor: "rgba(0, 0, 0, 1)",
                 },
               ],
               options: {

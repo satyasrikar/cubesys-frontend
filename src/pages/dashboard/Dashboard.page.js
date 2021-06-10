@@ -190,7 +190,7 @@ export const Dashboard = () => {
 
         <Link to="/tickets">
           <Button
-            variant="info"
+            variant="dark"
             style={{
               fontSize: "1rem",
               padding: "10px 30px",
