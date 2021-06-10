@@ -1,6 +1,7 @@
 import axios from "axios";
 
-const rootUrl = "http://ec2-18-117-211-14.us-east-2.compute.amazonaws.com/v1/";
+const rootUrl = "http://localhost:3001/v1/";
+
 const loginUrl = rootUrl + "user/login";
 const userProfileUrl = rootUrl + "user";
 const logoutUrl = rootUrl + "user/logout";
