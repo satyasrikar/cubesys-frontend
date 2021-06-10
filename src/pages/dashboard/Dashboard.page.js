@@ -150,7 +150,7 @@ export const Dashboard = () => {
         </Row>
 
         <div id="dashboardCards">
-          <Card border="dark" style={{ width: "15rem", margin: "10px" }}>
+          <Card id="dashboardCard" border="dark">
             <Card.Body>
               <Card.Title>Total tickets:</Card.Title>
               <Card.Subtitle className="mb-2 text-muted">
@@ -160,7 +160,7 @@ export const Dashboard = () => {
               <Card.Link href="#">View Tickets</Card.Link>
             </Card.Body>
           </Card>
-          <Card border="dark" style={{ width: "15rem", margin: "10px" }}>
+          <Card id="dashboardCard" border="dark">
             <Card.Body>
               <Card.Title>Pending tickets:</Card.Title>
               <Card.Subtitle className="mb-2 text-muted">
@@ -201,6 +201,7 @@ export const Dashboard = () => {
           </Button>
         </Link>
       </Container>
+
       <div id="chatbot">
         <div id="chatbotOnline">
           <RiRadioButtonLine /> <span>ONLINE</span>{" "}

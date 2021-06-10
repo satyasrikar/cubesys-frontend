@@ -2,6 +2,11 @@
   display: flex;
   background-color: #e6e6e6;
 }
+#dashboardCard {
+  border: 2px solid rgb(0, 0, 0);
+  width: 20rem;
+  margin: 10px;
+}
 #jumbotron:hover {
   background-color: rgb(236, 255, 255);
 }
@@ -15,7 +20,7 @@
   background-color: #292b2c;
   color: rgb(60, 241, 60);
   border-radius: 13px;
-  transition: ease-in-out 5s;
+  transition: ease-in-out 0.5s;
 }
 
 #chatbotHeader {
@@ -25,4 +30,23 @@
 #chatbotOnline {
   padding: 4px;
   margin-left: 5px;
+}
+
+@media screen and (max-width: 767px) {
+  #dashboardCards {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  #dashboardCard {
+    border: 2px solid rgb(0, 0, 0);
+    width: 20rem;
+    margin: 10px;
+  }
+
+  #calendar {
+    border: 2px solid rgb(0, 0, 0);
+    padding: 2px;
+  }
 }
