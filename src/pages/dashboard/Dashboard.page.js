@@ -14,24 +14,38 @@ import Calendar from "react-calendar";
 import { GrAdd } from "react-icons/gr";
 import { FaListAlt } from "react-icons/fa";
 import { RiRadioButtonLine } from "react-icons/ri";
+import axios from "axios";
 
 export const Dashboard = () => {
   const [open, setOpen] = useState(false);
   const [value, onChange] = useState(new Date());
   const [calendar, setCalendar] = useState(false);
   const [date, setDate] = useState();
+  const [latestOpen, setLatestOpen] = useState(null);
+  const [latestClosed, setLatestClosed] = useState(null);
 
   const dispatch = useDispatch();
   const { tickets } = useSelector((state) => state.tickets);
   const [toggle, setToggle] = useState(false);
+
   useEffect(() => {
     if (!tickets.length) {
       dispatch(fetchAllTickets());
     }
+    getLatestTickets();
   }, [tickets, dispatch, date]);
 
   const toggleChatBox = () => {
     setToggle(!toggle);
+  };
+
+  const postUrl = "http://localhost:3001/v1/slack/sync";
+
+  const syncSlack = () => {
+    axios
+      .post(postUrl)
+      .then((response) => console.log(response))
+      .catch((error) => console.log(error));
   };
 
   const theme = {
@@ -64,7 +78,6 @@ export const Dashboard = () => {
     setCalendar(!calendar);
   };
   const [nowTime, setNowtime] = useState(value);
-  console.log(nowTime);
 
   const steps = [
     {
@@ -122,6 +135,18 @@ export const Dashboard = () => {
     },
   ];
 
+  const getLatestTickets = async () => {
+    const latestTickets = { tickets };
+
+    let closedTickets = [];
+
+    // for (const tkt in latestTickets.tickets) {
+    //   if (latestTickets.tickets[tkt].status === "Closed") {
+    //     closedTickets.push(latestTickets.tickets[tkt]);
+    //   }
+    // }
+  };
+
   return (
     <>
       <Container>
@@ -131,16 +156,20 @@ export const Dashboard = () => {
             Log new tickets, view your ticket stats and sync to workspaces live
             from your Cubesys Dashboard!
           </p>
-          {/* <p>
+          <p>
             <Link to="#">
               <Button
                 variant="dark"
-                style={{ fontSize: "1rem", padding: "10px 30px" }}
+                style={{
+                  fontSize: "1rem",
+                  padding: "10px 30px",
+                  float: "right",
+                }}
               >
                 Read More
               </Button>
             </Link>
-          </p> */}
+          </p>
         </Jumbotron>
 
         <Row>
@@ -149,31 +178,68 @@ export const Dashboard = () => {
           </Col>
         </Row>
 
-        <div id="dashboardCards">
-          <Card id="dashboardCard" border="dark">
-            <Card.Body>
-              <Card.Title>Total tickets:</Card.Title>
-              <Card.Subtitle className="mb-2 text-muted">
-                Total Log Count
-              </Card.Subtitle>
-              <Card.Text>{totalTickets}</Card.Text>
-              <Card.Link href="#">View Tickets</Card.Link>
-            </Card.Body>
-          </Card>
-          <Card id="dashboardCard" border="dark">
-            <Card.Body>
-              <Card.Title>Pending tickets:</Card.Title>
-              <Card.Subtitle className="mb-2 text-muted">
-                Unresolved
-              </Card.Subtitle>
-              <Card.Text>{pendingTickets.length}</Card.Text>
-              <Card.Link href="#">View Tickets</Card.Link>
-            </Card.Body>
-          </Card>
-          <div id="calendar">
-            <Calendar onChange={onChange} value={value} />
+        <Row>
+          <div id="dashboardCards">
+            <Col>
+              <Card id="dashboardCard" border="dark">
+                <Card.Body>
+                  <Card.Title>Total tickets:</Card.Title>
+                  <Card.Subtitle className="mb-2 text-muted">
+                    Total Log Count
+                  </Card.Subtitle>
+                  <Card.Text>{totalTickets}</Card.Text>
+                </Card.Body>
+              </Card>
+              <Card id="dashboardCard" border="dark">
+                <Card.Body>
+                  <Card.Title>Pending tickets:</Card.Title>
+                  <Card.Subtitle className="mb-2 text-muted">
+                    Unresolved
+                  </Card.Subtitle>
+                  <Card.Text>{pendingTickets.length}</Card.Text>
+                </Card.Body>
+              </Card>
+            </Col>
+            <Col>
+              <Card id="dashboardCard" border="dark">
+                <Card.Body>
+                  <Card.Title>Sync Workspace:</Card.Title>
+                  <Card.Subtitle className="mb-2 text-muted">
+                    Click here to send slack notifications!
+                  </Card.Subtitle>
+                  <Card.Text>
+                    <Button
+                      onClick={syncSlack}
+                      variant="dark"
+                      style={{ float: "right" }}
+                    >
+                      Sync
+                    </Button>
+                  </Card.Text>
+                </Card.Body>
+              </Card>
+              <Card id="dashboardCard" border="dark">
+                <Card.Body>
+                  <Card.Title>Download Ticket Sheet:</Card.Title>
+                  <Card.Subtitle className="mb-2 text-muted">
+                    Download Ticket data
+                  </Card.Subtitle>
+                  <Card.Text>
+                    <Button variant="dark" style={{ float: "right" }}>
+                      Save
+                    </Button>
+                  </Card.Text>
+                </Card.Body>
+              </Card>
+            </Col>
           </div>
-        </div>
+
+          <Col>
+            <div id="calendar">
+              <Calendar onChange={onChange} value={value} />
+            </div>
+          </Col>
+        </Row>
 
         <Link to="/add-ticket">
           <Button

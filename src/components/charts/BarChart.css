@@ -82,13 +82,10 @@
 }
 #modalbody {
   justify-content: center;
-  background-color: rgb(255, 255, 255);
 }
 
-#qrcode {
-  margin: 10px;
-  float: right;
-  background-color: #969696;
+#modalQR {
+  text-align: center;
 }
 
 /* @media screen and (min-width: 767px) {

@@ -75,57 +75,59 @@ export const LoginForm = ({ formSwitcher }) => {
   };
 
   return (
-    <Container>
-      <Row>
-        <Col>
-          <h1 className="text-dark text-center">Cubesys CRM Suite</h1>
+    <>
+      <Container>
+        <Row>
+          <Col>
+            <h1 className="text-dark text-center">Cubesys CRM Suite</h1>
 
-          <hr />
-          {error && <Alert variant="danger">{error}</Alert>}
-          <Form autoComplete="off" onSubmit={handleOnSubmit}>
-            <Form.Group>
-              <Form.Label>Email Address</Form.Label>
+            <hr />
+            {error && <Alert variant="danger">{error}</Alert>}
+            <Form autoComplete="off" onSubmit={handleOnSubmit}>
+              <Form.Group>
+                <Form.Label>Email Address</Form.Label>
 
-              <Form.Control
-                type="email"
-                name="email"
-                value={email}
-                onChange={handleOnChange}
-                placeholder="Enter Email"
-                required
-              />
-            </Form.Group>
-            <Form.Group>
-              <Form.Label>Password</Form.Label>
+                <Form.Control
+                  type="email"
+                  name="email"
+                  value={email}
+                  onChange={handleOnChange}
+                  placeholder="Enter Email"
+                  required
+                />
+              </Form.Group>
+              <Form.Group>
+                <Form.Label>Password</Form.Label>
 
-              <Form.Control
-                type="password"
-                name="password"
-                onChange={handleOnChange}
-                value={password}
-                placeholder="password"
-                required
-              />
-            </Form.Group>
+                <Form.Control
+                  type="password"
+                  name="password"
+                  onChange={handleOnChange}
+                  value={password}
+                  placeholder="password"
+                  required
+                />
+              </Form.Group>
 
-            <Button type="submit">Login</Button>
-            {isLoading && <Spinner variant="dark" animation="border" />}
-          </Form>
-          <hr />
-        </Col>
-      </Row>
+              <Button type="submit">Login</Button>
+              {isLoading && <Spinner variant="dark" animation="border" />}
+            </Form>
+            <hr />
+          </Col>
+        </Row>
 
-      <Row>
-        <Col>
-          <a href="/password-reset">Forget Password?</a>
-        </Col>
-      </Row>
-      <Row className="py-4">
-        <Col>
-          Are you new here? <a href="/registration">Register Now</a>
-        </Col>
-      </Row>
-    </Container>
+        <Row>
+          <Col>
+            <a href="/password-reset">Forget Password?</a>
+          </Col>
+        </Row>
+        <Row className="py-4">
+          <Col>
+            Are you new here? <a href="/registration">Register Now</a>
+          </Col>
+        </Row>
+      </Container>
+    </>
   );
 };
 

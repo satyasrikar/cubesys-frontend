@@ -1,11 +1,13 @@
 #dashboardCards {
   display: flex;
-  background-color: #e6e6e6;
+  background-color: #ffffff;
+  flex-wrap: wrap;
 }
 #dashboardCard {
   border: 2px solid rgb(0, 0, 0);
   width: 20rem;
   margin: 10px;
+  height: 40%;
 }
 #jumbotron:hover {
   background-color: rgb(236, 255, 255);
@@ -13,7 +15,7 @@
 
 #calendar {
   margin: 0.75rem;
-  border-radius: 10px;
+
   width: 19rem;
 }
 #chatbot {
@@ -40,7 +42,7 @@
   }
 
   #dashboardCard {
-    border: 2px solid rgb(0, 0, 0);
+    border: 2px solid rgb(90, 78, 78);
     width: 20rem;
     margin: 10px;
   }

@@ -32,18 +32,20 @@ export const Entry = () => {
   return (
     <>
       <div className="entry-page bg-dark">
-        <Jumbotron className="form-box">
-          {frmLoad === "login" && <LoginForm formSwitcher={formSwitcher} />}
+        <div className="backdrop">
+          <Jumbotron className="form-box">
+            {frmLoad === "login" && <LoginForm formSwitcher={formSwitcher} />}
 
-          {frmLoad === "rest" && (
-            <ResetPassword
-              // handleOnChange={handleOnChange}
-              handleOnResetSubmit={handleOnResetSubmit}
-              formSwitcher={formSwitcher}
-              // email={email}
-            />
-          )}
-        </Jumbotron>
+            {frmLoad === "rest" && (
+              <ResetPassword
+                // handleOnChange={handleOnChange}
+                handleOnResetSubmit={handleOnResetSubmit}
+                formSwitcher={formSwitcher}
+                // email={email}
+              />
+            )}
+          </Jumbotron>
+        </div>
       </div>
     </>
   );

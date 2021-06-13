@@ -42,9 +42,14 @@ export const Ticket = () => {
       <Row>
         <Col>
           {selectedTicket.status === "Pending operator response" ? (
-            <div className="statusbarOpen">OPEN TICKET</div>
+            <div className="statusbarOpen">
+              TICKET IS: <b>OPEN</b> | Ref ID: <b>[{selectedTicket._id}]</b>
+            </div>
           ) : (
-            <div className="statusbarClosed">CLOSED TICKET</div>
+            <div className="statusbarClosed">
+              {" "}
+              TICKET IS: <b>CLOSED</b> | Ref ID: <b>[{selectedTicket._id}]</b>
+            </div>
           )}
         </Col>
       </Row>
@@ -79,7 +84,7 @@ export const Ticket = () => {
           {selectedTicket.status == "Pending operator response" ? (
             <Button
               className="mr-2"
-              variant="dark"
+              variant="danger"
               onClick={() => dispatch(closeTicket(tId))}
               disabled={selectedTicket.status === "Closed"}
             >
@@ -87,7 +92,7 @@ export const Ticket = () => {
             </Button>
           ) : (
             <Button
-              variant="dark"
+              variant="success"
               onClick={() => dispatch(openTicket(tId))}
               disabled={selectedTicket.status === "Pending operator response"}
             >

@@ -55,30 +55,11 @@ const Stats = () => {
     ":" +
     currentDate.getSeconds();
 
-  function setData() {
-    setPayload({
-      parent: { database_id: `${process.env.NOTION_DATABASE_ID}` },
-      properties: {
-        Name: {
-          title: [
-            {
-              text: {
-                content: "Hello, World",
-              },
-            },
-          ],
-        },
-      },
-    });
-    postToNotion(payload);
-  }
+  const postUrl = "http://localhost:3001/v1/slack/sync";
 
-  const postUrl = "https://api.notion.com/v1/pages";
-  const getURL = `https://api.notion.com/v1/databases/${process.env.NOTION_DATABASE_ID}`;
-
-  const postToNotion = (payload) => {
+  const syncSlack = () => {
     axios
-      .post(postUrl, payload)
+      .post(postUrl)
       .then((response) => console.log(response))
       .catch((error) => console.log(error));
   };
@@ -98,10 +79,9 @@ const Stats = () => {
       <Container>
         <Card>
           <div id="time" style={{ display: "flex", position: "relative" }}>
-            <div>
+            <p>
               <b>CURRENT TIME:</b>
-            </div>
-            {"   "}
+            </p>
 
             <div style={{ backgroundColor: "pink", position: "" }}>{time}</div>
           </div>
@@ -121,7 +101,7 @@ const Stats = () => {
             </Collapse>
             <Card.Text>
               View all your Statistics at one place, fetched from your
-              dashboard. content.
+              dashboard.
             </Card.Text>
 
             {/* Buttons to Sync to Slack
@@ -149,17 +129,17 @@ const Stats = () => {
                       onClick={() => setShow(true)}
                       id="syncSlack"
                       variant="dark"
-                      disabled
                       style={{
                         fontSize: "1rem",
                         padding: "10px 30px",
                         margin: "5px",
                       }}
+                      onClick={syncSlack}
                     >
-                      <SiSlack /> {""}Sync Slack
+                      <SiSlack /> {""}Sync Slack Workspace
                     </Button>
 
-                    <Button
+                    {/* <Button
                       id="syncNotion"
                       variant="success"
                       style={{
@@ -167,11 +147,9 @@ const Stats = () => {
                         padding: "10px 30px",
                         margin: "5px",
                       }}
-                      disabled
-                      onClick={setData}
                     >
                       <SiNotion /> Sync Notion Workspace
-                    </Button>
+                    </Button> */}
                   </Row>
                   <Row>
                     <BarChart

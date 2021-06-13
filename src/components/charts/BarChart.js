@@ -69,20 +69,20 @@ const BarChart = ({ data, title, color }) => {
     return (
       <Modal
         {...props}
-        size="lg"
+        size="sm"
         aria-labelledby="contained-modal-title-vcenter"
         centered
       >
         <Modal.Header closeButton>
           <Modal.Title id="contained-modal-title-vcenter">
-            Download Dynamic Ticket QR
+            Dynamic Ticket QR
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <div id="modalbody">
             <h6>Open Ticket</h6>
             <p>{modaltext}</p>
-            <p>
+            <p id="modalQR">
               <QRCode id="qrcode" value={modaltext} />
             </p>
           </div>

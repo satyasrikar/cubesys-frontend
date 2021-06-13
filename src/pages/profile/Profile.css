@@ -6,6 +6,9 @@
   padding: 20px;
 }
 
+#profileCard {
+  width: 50%;
+}
 #syncButton {
   border: 1px solid black;
   border-radius: 200px;
@@ -14,8 +17,7 @@
   right: 10px;
 }
 #profilePhoto {
-  background-color: rgb(15, 240, 210);
-  margin: 30px;
+  margin: 45px;
 }
 
 #editButton {
@@ -37,14 +39,6 @@
 #homeButton {
   float: right;
   margin: 1rem;
-}
-
-#profileFieldContainer {
-  background-color: blueviolet;
-}
-
-#profileField {
-  background-color: rgb(228, 228, 228);
 }
 
 #csvlink {

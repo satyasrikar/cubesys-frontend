@@ -1,0 +1,6 @@
+#backdrop {
+  background-image: url("lattice.png");
+  background-repeat: repeat;
+  background-size: 200px 100px;
+  background-color: black;
+}
