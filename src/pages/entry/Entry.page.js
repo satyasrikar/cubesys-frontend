@@ -31,7 +31,7 @@ export const Entry = () => {
 
   return (
     <>
-      <div className="entry-page bg-dark">
+      <div className="entry-page">
         <div className="backdrop">
           <Jumbotron className="form-box">
             {frmLoad === "login" && <LoginForm formSwitcher={formSwitcher} />}

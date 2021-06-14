@@ -1,7 +1,8 @@
 import axios from "axios";
 
-// const rootUrl = "http://localhost:3001/v1/";
-const rootUrl = "http://localhost:3001/v1/";
+// const rootUrl = "http://ec2-3-108-60-253.ap-south-1.compute.amazonaws.com:3001/v1/";
+const rootUrl =
+  "http://ec2-3-108-60-253.ap-south-1.compute.amazonaws.com:3001/v1/";
 
 const otpReqUrl = rootUrl + "user/reset-password";
 const updatePassUrl = rootUrl + "user/reset-password";

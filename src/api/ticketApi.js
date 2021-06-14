@@ -1,7 +1,8 @@
 import axios from "axios";
 
-// const rootUrl = "http://localhost:3001/v1/";
-const rootUrl = "http://localhost:3001/v1/";
+// const rootUrl = "http://ec2-3-108-60-253.ap-south-1.compute.amazonaws.com:3001/v1/";
+const rootUrl =
+  "http://ec2-3-108-60-253.ap-south-1.compute.amazonaws.com:3001/v1/";
 
 const ticketUlr = rootUrl + "ticket/";
 const closeTicketUrl = rootUrl + "ticket/close-ticket/";
@@ -10,11 +11,14 @@ const openTicketUrl = rootUrl + "ticket/open-ticket/";
 export const getAllTickets = () => {
   return new Promise(async (resolve, reject) => {
     try {
-      const result = await axios.get("http://localhost:3001/v1/ticket", {
-        headers: {
-          Authorization: sessionStorage.getItem("accessJWT"),
-        },
-      });
+      const result = await axios.get(
+        "http://ec2-3-108-60-253.ap-south-1.compute.amazonaws.com:3001/v1/ticket",
+        {
+          headers: {
+            Authorization: sessionStorage.getItem("accessJWT"),
+          },
+        }
+      );
 
       resolve(result);
     } catch (error) {
@@ -81,7 +85,7 @@ export const updateTicketStatusClosed = (_id) => {
 export const updateTicketStatusOpen = (_id) => {
   return new Promise(async (resolve, reject) => {
     try {
-      console.log("PATHCHHHHHHHHHH");
+      console.log("PATHCHH IT BABY");
       const result = await axios.patch(
         openTicketUrl + _id,
         {},

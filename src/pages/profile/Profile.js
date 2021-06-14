@@ -10,6 +10,7 @@ import {
   Col,
   Container,
   Image,
+  InputGroup,
   Row,
   Table,
 } from "react-bootstrap";
@@ -30,9 +31,12 @@ const Profile = () => {
   const userData = user;
   const [bio, setBio] = useState("BIO");
   const [loading, setLoading] = useState(false);
-  const [image, setImage] = useState("");
+  const [image, setImage] = useState(null);
 
   const [file, setFile] = useState(null);
+
+  const [imageData, setImageData] = useState("");
+  const [showUploadButton, setShowUploadButton] = useState(false);
 
   useEffect(() => {
     setBio("Associate Software Engineer / Operations");
@@ -58,6 +62,34 @@ const Profile = () => {
     data: data,
     headers: headers,
     filename: `[${userData.user.name}]CubesysProfilePhoto.csv`,
+  };
+
+  const uploadFile = async (e) => {
+    let formData = new FormData();
+    const fileSelector = e.target.files[0];
+
+    formData.append("file", fileSelector);
+
+    try {
+      let imageUrl;
+      const uploadedImage = await axios
+        .post(
+          "http://ec2-3-108-60-253.ap-south-1.compute.amazonaws.com:3001/v1/image/upload",
+          formData,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        )
+        .then((res) => {
+          imageUrl = res.data.secure_url;
+        });
+
+      setProfilePhoto(imageUrl);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (
@@ -97,14 +129,25 @@ const Profile = () => {
                   <Image id="profilePhoto" src={profilePhoto} roundedCircle />
                 )}
 
-                <div style={{ display: "flex" }}>
-                  <Button id="removeButton" variant="outline-danger">
-                    Remove
-                  </Button>
-                  <Button id="removeButton" variant="info">
-                    Upload
-                  </Button>
-                </div>
+                <Button
+                  onClick={() => setShowUploadButton(!showUploadButton)}
+                  id="upload"
+                  variant="outline-light"
+                >
+                  Change profile image
+                </Button>
+
+                {showUploadButton ? (
+                  <div style={{ display: "flex" }}>
+                    <input
+                      id="photo"
+                      type="file"
+                      onChange={(e) => uploadFile(e)}
+                    />
+                  </div>
+                ) : (
+                  ""
+                )}
               </Card>
             </Col>
             <Col>
@@ -149,11 +192,11 @@ const Profile = () => {
                   </Card.Body>
                 </Card>
                 <Link to="/dashboard">
-                  <Button id="homeButton" variant="info">
+                  <Button id="homeButton" variant="dark">
                     Home
                   </Button>
                 </Link>
-                <Button id="downloadButton" variant="success">
+                <Button id="downloadButton" variant="outline-dark">
                   <CSVLink id="csvlink" {...csvData}>
                     {" "}
                     Download Profile Details (CSV)

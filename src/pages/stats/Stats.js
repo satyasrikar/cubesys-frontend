@@ -11,6 +11,7 @@ import {
   Button,
   ButtonGroup,
   ButtonToolbar,
+  Breadcrumb,
   Card,
   CardGroup,
   Col,
@@ -24,6 +25,8 @@ import {
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchAllTickets } from "../ticket-list/ticketsAction";
+import { PageBreadcrumb } from "../../components/breadcrumb/Breadcrumb.comp";
+
 import BarChart from "../../components/charts/BarChart";
 import dotenv from "dotenv";
 import Calendar from "react-calendar";
@@ -55,7 +58,8 @@ const Stats = () => {
     ":" +
     currentDate.getSeconds();
 
-  const postUrl = "http://localhost:3001/v1/slack/sync";
+  const postUrl =
+    "http://ec2-3-108-60-253.ap-south-1.compute.amazonaws.com:3001/v1/slack/sync";
 
   const syncSlack = () => {
     axios
@@ -77,13 +81,23 @@ const Stats = () => {
   return (
     <>
       <Container>
+        <Row>
+          <Col>
+            <PageBreadcrumb page="Statistics" />
+          </Col>
+        </Row>
         <Card>
           <div id="time" style={{ display: "flex", position: "relative" }}>
-            <p>
-              <b>CURRENT TIME:</b>
-            </p>
-
-            <div style={{ backgroundColor: "pink", position: "" }}>{time}</div>
+            <div
+              style={{
+                position: "absolute",
+                right: "0",
+                padding: "5px",
+              }}
+            >
+              <b>TIME: </b>
+              {time} HH:MM:SS
+            </div>
           </div>
           <Card.Header>
             <Nav variant="tabs" defaultActiveKey="#first">
@@ -125,6 +139,7 @@ const Stats = () => {
                     >
                       <FaCalendarAlt /> View Calendar
                     </Button>
+
                     <Button
                       onClick={() => setShow(true)}
                       id="syncSlack"
@@ -133,6 +148,8 @@ const Stats = () => {
                         fontSize: "1rem",
                         padding: "10px 30px",
                         margin: "5px",
+                        position: "absolute",
+                        right: "0",
                       }}
                       onClick={syncSlack}
                     >

@@ -26,7 +26,15 @@ export const LoginForm = ({ formSwitcher }) => {
 
   useEffect(() => {
     sessionStorage.getItem("accessJWT") && history.replace(from);
+
+    // if (history.goBack()) {
+    //   window.location.reload(true);
+    // }
   }, [history, isAuth]);
+
+  window.addEventListener("popstate", () => {
+    history.go(1);
+  });
 
   const [email, setEmail] = useState("alpha.tms@live.in");
   const [password, setPassword] = useState("Eleven@111");
@@ -58,9 +66,6 @@ export const LoginForm = ({ formSwitcher }) => {
     dispatch(loginPending());
 
     try {
-      console.log("POSTING");
-      console.log({ email, password });
-
       const isAuth = await userLogin({ email, password });
       if (isAuth.status === "error") {
         return dispatch(loginFail(isAuth.message));
@@ -109,7 +114,9 @@ export const LoginForm = ({ formSwitcher }) => {
                 />
               </Form.Group>
 
-              <Button type="submit">Login</Button>
+              <Button variant="dark" type="submit">
+                Login
+              </Button>
               {isLoading && <Spinner variant="dark" animation="border" />}
             </Form>
             <hr />

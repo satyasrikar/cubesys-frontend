@@ -1,7 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { ThemeProvider } from "styled-components";
-import { Container, Row, Col, Button, Jumbotron, Card } from "react-bootstrap";
+import {
+  Container,
+  Row,
+  Col,
+  Button,
+  Jumbotron,
+  Card,
+  Modal,
+} from "react-bootstrap";
 import { TicketTable } from "../../components/ticket-table/TicketTable.comp";
 import tickets from "../../assets/data/dummy-tickets.json";
 import { PageBreadcrumb } from "../../components/breadcrumb/Breadcrumb.comp";
@@ -11,12 +19,18 @@ import ChatBot from "react-simple-chatbot";
 import { fetchAllTickets } from "../ticket-list/ticketsAction";
 import "./Dashboard.css";
 import Calendar from "react-calendar";
+import "react-calendar/dist/Calendar.css";
 import { GrAdd } from "react-icons/gr";
 import { FaListAlt } from "react-icons/fa";
 import { RiRadioButtonLine } from "react-icons/ri";
 import axios from "axios";
+import { SiSlack } from "react-icons/si";
+
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export const Dashboard = () => {
+  const [modalShow, setModalShow] = React.useState(false);
   const [open, setOpen] = useState(false);
   const [value, onChange] = useState(new Date());
   const [calendar, setCalendar] = useState(false);
@@ -39,7 +53,14 @@ export const Dashboard = () => {
     setToggle(!toggle);
   };
 
-  const postUrl = "http://localhost:3001/v1/slack/sync";
+  toast.configure();
+
+  const notify = () => {
+    toast.dark("Workspace successfully synced!");
+  };
+
+  const postUrl =
+    "http://ec2-3-108-60-253.ap-south-1.compute.amazonaws.com:3001/v1/slack/sync";
 
   const syncSlack = () => {
     axios
@@ -138,14 +159,41 @@ export const Dashboard = () => {
   const getLatestTickets = async () => {
     const latestTickets = { tickets };
 
-    let closedTickets = [];
+    // let closedTickets = [];
 
     // for (const tkt in latestTickets.tickets) {
     //   if (latestTickets.tickets[tkt].status === "Closed") {
     //     closedTickets.push(latestTickets.tickets[tkt]);
     //   }
     // }
+    // const lastClosed = closedTickets[0];
+    setLatestClosed(tickets[0]);
   };
+
+  function TicketModal(props) {
+    return (
+      <Modal
+        {...props}
+        size="lg"
+        aria-labelledby="contained-modal-title-vcenter"
+        centered
+      >
+        <Modal.Header id="modalCustom" closeButton>
+          <Modal.Title id="contained-modal-title-vcenter">
+            All Tickets
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <TicketTable redirect="dash" />
+        </Modal.Body>
+        <Modal.Footer id="modalCustom">
+          <Button variant="outline-light" onClick={props.onHide}>
+            Close
+          </Button>
+        </Modal.Footer>
+      </Modal>
+    );
+  }
 
   return (
     <>
@@ -156,7 +204,7 @@ export const Dashboard = () => {
             Log new tickets, view your ticket stats and sync to workspaces live
             from your Cubesys Dashboard!
           </p>
-          <p>
+          {/* <p>
             <Link to="#">
               <Button
                 variant="dark"
@@ -165,11 +213,12 @@ export const Dashboard = () => {
                   padding: "10px 30px",
                   float: "right",
                 }}
+                disabled
               >
                 Read More
               </Button>
             </Link>
-          </p>
+          </p> */}
         </Jumbotron>
 
         <Row>
@@ -204,30 +253,41 @@ export const Dashboard = () => {
               <Card id="dashboardCard" border="dark">
                 <Card.Body>
                   <Card.Title>Sync Workspace:</Card.Title>
-                  <Card.Subtitle className="mb-2 text-muted">
-                    Click here to send slack notifications!
-                  </Card.Subtitle>
+                  {/* <Card.Subtitle className="mb-2 text-muted">
+                    Send slack update!
+                  </Card.Subtitle> */}
                   <Card.Text>
                     <Button
-                      onClick={syncSlack}
-                      variant="dark"
-                      style={{ float: "right" }}
+                      onClick={() => {
+                        syncSlack();
+                        notify();
+                      }}
+                      variant="outline-light"
+                      style={{ float: "right", paddingBottom: "5px" }}
                     >
-                      Sync
+                      <SiSlack />
+                      {"  "}Sync
                     </Button>
                   </Card.Text>
                 </Card.Body>
               </Card>
               <Card id="dashboardCard" border="dark">
                 <Card.Body>
-                  <Card.Title>Download Ticket Sheet:</Card.Title>
-                  <Card.Subtitle className="mb-2 text-muted">
-                    Download Ticket data
-                  </Card.Subtitle>
+                  <Card.Title>View Ticket table:</Card.Title>
+
                   <Card.Text>
-                    <Button variant="dark" style={{ float: "right" }}>
-                      Save
+                    <Button
+                      onClick={() => setModalShow(true)}
+                      variant="outline-light"
+                      style={{ float: "right" }}
+                    >
+                      <FaListAlt /> {"  "} View
                     </Button>
+
+                    <TicketModal
+                      show={modalShow}
+                      onHide={() => setModalShow(false)}
+                    />
                   </Card.Text>
                 </Card.Body>
               </Card>
@@ -235,13 +295,13 @@ export const Dashboard = () => {
           </div>
 
           <Col>
-            <div id="calendar">
-              <Calendar onChange={onChange} value={value} />
+            <div>
+              <Calendar id="calendar" onChange={onChange} value={value} />
             </div>
           </Col>
         </Row>
 
-        <Link to="/add-ticket">
+        {/* <Link to="/add-ticket">
           <Button
             variant="light"
             style={{
@@ -266,6 +326,26 @@ export const Dashboard = () => {
             <FaListAlt /> View All Tickets
           </Button>
         </Link>
+
+        <Link to="#">
+          <Button
+            variant="success"
+            style={{
+              fontSize: "1rem",
+              padding: "10px 30px",
+              margin: "1rem",
+              float: "right",
+            }}
+            onClick={() => {
+              syncSlack();
+              notify();
+            }}
+          >
+            <SiSlack />
+            {"   "}
+            Sync workspace
+          </Button>
+        </Link> */}
       </Container>
 
       <div id="chatbot">

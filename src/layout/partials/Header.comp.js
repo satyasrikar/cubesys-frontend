@@ -21,8 +21,8 @@ export const Header = () => {
 
   return (
     <>
-      <div className="backdrop">
-        <Navbar collapseOnSelect bg="dark" variant="dark" expand="md">
+      <div>
+        <Navbar id="backdrop" collapseOnSelect variant="dark" expand="md">
           <Navbar.Brand style={{ display: "flex", alignItems: "center" }}>
             <img src={logo} alt="logo" width="50px" />
             <h4 className="ml-2">Cubesys CRM</h4>

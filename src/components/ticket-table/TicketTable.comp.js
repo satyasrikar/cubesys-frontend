@@ -7,8 +7,9 @@ import { Link } from "react-router-dom";
 
 import { FaListAlt } from "react-icons/fa";
 import { CSVLink } from "react-csv";
+const QRCode = require("qrcode.react");
 
-export const TicketTable = () => {
+export const TicketTable = ({ dash }) => {
   const { searchTicketList, isLoading, error } = useSelector(
     (state) => state.tickets
   );
@@ -17,13 +18,12 @@ export const TicketTable = () => {
 
   const ticketData = searchTicketList;
 
-  console.log(ticketData[0]);
-
   return (
     <>
       <Table striped bordered hover>
         <thead>
           <tr>
+            <th>QR</th>
             <th>#Ticket ID</th>
             <th>Title</th>
             <th>Status</th>
@@ -34,7 +34,19 @@ export const TicketTable = () => {
           {searchTicketList.length ? (
             searchTicketList.map((row, index) => (
               <tr key={row._id}>
-                <td>{row._id}</td>
+                <td>
+                  <div>
+                    <QRCode
+                      id="qrcode"
+                      style={{ width: "4rem", height: "4rem" }}
+                      value={row.subject}
+                    />
+                  </div>
+                </td>
+                <td style={{ display: "flex" }}>
+                  <div>{row._id}</div>
+                </td>
+
                 <td>
                   <Link to={`/ticket/${row._id}`}>{row.subject}</Link>
                 </td>
@@ -56,11 +68,11 @@ export const TicketTable = () => {
         </tbody>
       </Table>
 
-      <Link to="#">
+      {/* <Link to="#">
         <Button className="mt-2" variant="dark" style={{ float: "right" }}>
           Download Ticket Data
         </Button>
-      </Link>
+      </Link> */}
     </>
   );
 };

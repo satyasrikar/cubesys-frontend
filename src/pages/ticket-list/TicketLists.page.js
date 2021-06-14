@@ -38,7 +38,9 @@ export const TicketLists = () => {
         </Col>
       </Row>
       <Row>
-        <Col className="mt-2">Recently Added tickets</Col>
+        <Col style={{ position: "relative", float: "right" }} className="mt-2">
+          Recently Added tickets
+        </Col>
       </Row>
       <hr />
       <hr />

@@ -10,11 +10,11 @@
 // To learn more about the benefits of this model and instructions on how to
 // opt-in, read https://bit.ly/CRA-PWA
 
-const islocalhost = Boolean(
-  window.location.hostname === "localhost" ||
-    // [::1] is the IPv6 localhost address.
+const isec2-3-108-60-253.ap-south-1.compute.amazonaws.com = Boolean(
+  window.location.hostname === "ec2-3-108-60-253.ap-south-1.compute.amazonaws.com" ||
+    // [::1] is the IPv6 ec2-3-108-60-253.ap-south-1.compute.amazonaws.com address.
     window.location.hostname === "[::1]" ||
-    // 127.0.0.0/8 are considered localhost for IPv4.
+    // 127.0.0.0/8 are considered ec2-3-108-60-253.ap-south-1.compute.amazonaws.com for IPv4.
     window.location.hostname.match(
       /^127(?:\.(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3}$/
     )
@@ -34,11 +34,11 @@ export function register(config) {
     window.addEventListener("load", () => {
       const swUrl = `${process.env.PUBLIC_URL}/service-worker.js`;
 
-      if (islocalhost) {
-        // This is running on localhost. Let's check if a service worker still exists or not.
+      if (isec2-3-108-60-253.ap-south-1.compute.amazonaws.com) {
+        // This is running on ec2-3-108-60-253.ap-south-1.compute.amazonaws.com. Let's check if a service worker still exists or not.
         checkValidServiceWorker(swUrl, config);
 
-        // Add some additional logging to localhost, pointing developers to the
+        // Add some additional logging to ec2-3-108-60-253.ap-south-1.compute.amazonaws.com, pointing developers to the
         // service worker/PWA documentation.
         navigator.serviceWorker.ready.then(() => {
           console.log(
@@ -47,7 +47,7 @@ export function register(config) {
           );
         });
       } else {
-        // Is not localhost. Just register service worker
+        // Is not ec2-3-108-60-253.ap-south-1.compute.amazonaws.com. Just register service worker
         registerValidSW(swUrl, config);
       }
     });
